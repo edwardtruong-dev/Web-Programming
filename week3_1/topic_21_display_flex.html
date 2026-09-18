@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Topic 21 - display: flex</title>
+    <style>
+        body {
+            background-color: #0f172a;
+            color: #ffffff;
+            font-family: sans-serif;
+            padding: 20px;
+        }
+
+        .flex-container {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+            background-color: #1e293b;
+            padding: 16px;
+            border-radius: 8px;
+            margin-bottom: 16px;
+        }
+
+        .space-between { justify-content: space-between; }
+        .center-items { align-items: center; justify-content: center; }
+
+        .item {
+            background-color: #0284c7;
+            padding: 10px 18px;
+            border-radius: 6px;
+            font-weight: bold;
+        }
+        .tall { height: 60px; display: flex; align-items: center; }
+        .grow { flex: 1; display: flex; align-items: center; justify-content: center; }
+    </style>
+</head>
+<body>
+    <h3>Simple Row with Gap</h3>
+    <div class="flex-container">
+        <div class="item">HELLO</div>
+        <div class="item">HEY</div>
+        <div class="item">HI</div>
+    </div>
+
+    <h3>Space-Between Alignment</h3>
+    <div class="flex-container space-between">
+        <div class="item">Portfolio Logo</div>
+        <div class="item">Menu</div>
+    </div>
+
+    <h3>Flex Grow Item</h3>
+    <div class="flex-container">
+        <div class="item tall">Fixed</div>
+        <div class="item grow">flex: 1 fills remaining space</div>
+    </div>
+</body>
+</html>

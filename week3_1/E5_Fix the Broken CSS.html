@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>E5: Fix the Broken CSS</title>
+  <style>
+    /* Fix 1: Added semicolon after sans-serif */
+    body {
+      font-family: sans-serif;
+      background-color: #f0fdf4;
+    }
+
+    h1 {
+      /* Fix 2: Replaced = with : */
+      font-size: 2rem;
+      /* Fix 3: Added missing colon after color */
+      color: #15803d;
+      text-align: center;
+    }
+
+    p {
+      line-height: 1.7;
+      /* Fix 4: Correct property name 'color' instead of 'foreground' */
+      color: #334155;
+    }
+
+    /* Fix 5: Changed // to standard CSS comment syntax /* ... */ */
+    /* Highlight class for key content */
+    .highlight {
+      background-color: #dcfce7;
+      padding: 4px 8px;
+      border-radius: 4px;
+    }
+  </style>
+</head>
+<body>
+  <h1>TRUONG PHAT THUAN</h1>
+  <p>
+    Computer Engineering student at <span class="highlight">Gachon University</span>. All 5 CSS syntax errors in exercise E5 have been fully identified and resolved.
+  </p>
+</body>
+</html>

@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Topic 17 - Box Model Margin</title>
+    <style>
+        body {
+            background-color: #18181b;
+            color: #f4f4f5;
+            font-family: sans-serif;
+            padding: 20px;
+        }
+
+        .item {
+            background-color: #27272a;
+            border: 1px solid #52525b;
+            padding: 10px;
+            width: 280px;
+            border-radius: 6px;
+        }
+
+        .m-custom { margin: 15px 0; }
+        .m-auto { margin: 0 auto; text-align: center; }
+
+        /* Vertical margin collapse demo */
+        .block-top {
+            margin-bottom: 25px;
+            background-color: #1e3a8a;
+            padding: 10px;
+        }
+        .block-bottom {
+            margin-top: 35px;
+            background-color: #065f46;
+            padding: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="item m-custom">Margin demo box</div>
+    <div class="item m-auto">Centred using margin: 0 auto</div>
+
+    <h3 style="margin-top: 25px;">Margin Collapse Demo</h3>
+    <div class="block-top">margin-bottom: 25px</div>
+    <div class="block-bottom">margin-top: 35px (Gap is 35px, larger wins!)</div>
+</body>
+</html>

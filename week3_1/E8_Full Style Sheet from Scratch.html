@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TRUONG PHAT THUAN (Edward) - Portfolio</title>
+  <style>
+    /* 1. Box Model Reset */
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    /* 2. Base Styles & Sticky Footer Setup */
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      line-height: 1.6;
+      background-color: #f8fafc;
+      color: #1e293b;
+      /* Giữ footer luôn ở đáy màn hình */
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+    a {
+      text-decoration: none;
+      color: inherit;
+    }
+
+    /* 3. Navigation Bar (From E6) */
+    .navbar {
+      background-color: #1e293b;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 16px 36px;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+    .logo {
+      color: #ffffff;
+      font-size: 1.25rem;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+    }
+    .nav-links {
+      display: flex;
+      gap: 24px;
+      list-style: none;
+    }
+    .nav-links a {
+      color: #ffffff;
+      font-size: 1rem;
+      transition: color 0.2s ease;
+    }
+    .nav-links a:hover {
+      color: #10B981;
+    }
+
+    /* 4. Hero Section (Heading + Subtitle + Button) */
+    .hero {
+      background-color: #ecfdf5;
+      padding: 80px 20px;
+      text-align: center;
+      border-bottom: 1px solid #bbf7d0;
+    }
+    .hero h1 {
+      font-size: 2.5rem;
+      color: #15803d;
+      margin-bottom: 4px;
+      font-weight: 800;
+    }
+    .hero .role-name {
+      color: #4b5563;
+      font-size: 1.1rem;
+      font-weight: 600;
+      margin-bottom: 10px;
+    }
+    .hero p {
+      font-size: 1.1rem;
+      color: #64748b;
+      max-width: 650px;
+      margin: 0 auto 24px auto;
+      line-height: 1.7;
+    }
+    .hero-btn {
+      display: inline-block;
+      background-color: #15803d;
+      color: #ffffff;
+      padding: 12px 28px;
+      border-radius: 8px;
+      font-weight: 600;
+      transition: background-color 0.2s ease;
+    }
+    .hero-btn:hover {
+      background-color: #166534;
+    }
+
+    /* 5. 3-Column Skills Grid (Flexbox Layout) */
+    .skills-section {
+      max-width: 1050px;
+      width: 100%;
+      margin: 60px auto;
+      padding: 0 20px;
+    }
+    .section-title {
+      text-align: center;
+      font-size: 2rem;
+      margin-bottom: 40px;
+      color: #1e293b;
+    }
+    .skills-grid {
+      display: flex;
+      gap: 24px;
+    }
+    .skill-card {
+      flex: 1;
+      background-color: #ffffff;
+      padding: 32px 24px;
+      border-radius: 12px;
+      border: 1px solid #e2e8f0;
+      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+    .skill-card h3 {
+      font-size: 1.25rem;
+      margin-bottom: 12px;
+    }
+    .skill-card.primary h3 { color: #15803d; }
+    .skill-card.academic h3 { color: #0369a1; }
+    .skill-card.highlight h3 { color: #7c3aed; }
+    .skill-card p {
+      color: #64748b;
+      font-size: 0.95rem;
+      line-height: 1.6;
+      margin-bottom: 20px;
+    }
+    .badges-wrapper {
+      display: flex;
+      justify-content: center;
+      gap: 6px;
+      flex-wrap: wrap;
+    }
+    .badge {
+      background-color: #dcfce7;
+      color: #15803d;
+      padding: 4px 10px;
+      border-radius: 9999px;
+      font-size: 0.8rem;
+      font-weight: 600;
+    }
+
+    /* 6. Footer (Sticky to Bottom) */
+    .footer {
+      background-color: #1e293b;
+      color: #94a3b8;
+      text-align: center;
+      padding: 28px 20px;
+      font-size: 0.9rem;
+      margin-top: auto; /* Tự động đẩy footer xuống đáy */
+      width: 100%;
+    }
+    .footer span {
+      color: #10B981;
+      font-weight: 600;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Navigation Bar -->
+  <nav class="navbar">
+    <div class="logo">EDWARD</div>
+    <ul class="nav-links">
+      <li><a href="#about">About</a></li>
+      <li><a href="#academics">Gachon Univ</a></li>
+      <li><a href="#skills">Skills</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+  </nav>
+
+  <!-- Hero Section (Button bắt buộc theo đề) -->
+  <header class="hero" id="about">
+    <h1>TRUONG PHAT THUAN</h1>
+    <h2 class="role-name">(EdwardTruong)</h2>
+    <p>Computer Engineering student at Gachon University International College, focusing on Web Programming, responsive interfaces, and modern CSS architecture.</p>
+    <a href="#skills" class="hero-btn">View Skills</a>
+  </header>
+
+  <!-- 3-Column Skills Section -->
+  <main class="skills-section" id="skills">
+    <h2 class="section-title">Technical Domains</h2>
+    <div class="skills-grid">
+      <div class="skill-card primary">
+        <div>
+          <h3>Web & Layouts</h3>
+          <p>Proficient in modern CSS layout techniques, Box Model resets, Flexbox mechanics, and semantic HTML5 structuring.</p>
+        </div>
+        <div class="badges-wrapper">
+          <span class="badge">HTML5</span>
+          <span class="badge">CSS3</span>
+          <span class="badge">Flexbox</span>
+        </div>
+      </div>
+
+      <div class="skill-card academic">
+        <div>
+          <h3>Computer Engineering</h3>
+          <p>Building foundational expertise in computer architecture, hardware-software integration, and system optimization at Gachon University.</p>
+        </div>
+        <div class="badges-wrapper">
+          <span class="badge">Hardware</span>
+          <span class="badge">Systems</span>
+          <span class="badge">Architecture</span>
+        </div>
+      </div>
+
+      <div class="skill-card highlight">
+        <div>
+          <h3>Software & Logic</h3>
+          <p>Applying algorithmic thinking and clean coding methodologies to create maintainable and performant digital solutions.</p>
+        </div>
+        <div class="badges-wrapper">
+          <span class="badge">Algorithms</span>
+          <span class="badge">Logic</span>
+          <span class="badge">Web Dev</span>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer class="footer" id="contact">
+    <p>© 2026 <span>TRUONG PHAT THUAN</span> • Gachon University Web Programming • All rights reserved.</p>
+  </footer>
+
+</body>
+</html>

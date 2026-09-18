@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>E4: Box Model Explorer</title>
+  <style>
+    body {
+      font-family: sans-serif;
+      padding: 20px;
+      background-color: #010102;
+    }
+    .box-model-container {
+      display: flex;
+      justify-content: center;
+    }
+    .margin-box {
+      background-color: #fde68a; /* Amber: Margin */
+      padding: 24px;
+      border-radius: 8px;
+      text-align: center;
+    }
+    .border-box {
+      background-color: #94a3b8; /* Slate: Border */
+      padding: 24px;
+      border-radius: 6px;
+      color: #ffffff;
+    }
+    .padding-box {
+      background-color: #7dd3fc; /* Sky Blue: Padding */
+      padding: 24px;
+      border-radius: 4px;
+      color: #0f172a;
+    }
+    .content-box {
+      background-color: #c084fc; /* Violet: Content */
+      padding: 20px 36px;
+      border-radius: 4px;
+      color: #ffffff;
+      font-weight: bold;
+    }
+    .label {
+      font-size: 0.85rem;
+      font-weight: 700;
+      margin-bottom: 8px;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+  </style>
+</head>
+<body>
+  <div class="box-model-container">
+    <div class="margin-box">
+      <div class="label">Margin Layer</div>
+      <div class="border-box">
+        <div class="label">Border Layer</div>
+        <div class="padding-box">
+          <div class="label">Padding Layer</div>
+          <div class="content-box">
+            TRUONG PHAT THUAN • Gachon University
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

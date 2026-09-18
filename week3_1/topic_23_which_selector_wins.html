@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Topic 23 - Which Selector Wins?</title>
+    <style>
+        body {
+            background-color: #18181b;
+            color: #ffffff;
+            font-family: sans-serif;
+            padding: 20px;
+        }
+
+        /* Tie breaker demo: same specificity, later rule wins */
+        .status-badge { color: #ef4444; }
+        .status-badge { color: #22c55e; } /* Wins because it appears later */
+
+        /* Specificity conflict */
+        div p {  font-style: italic; color: #a1a1aa; } /* (0, 0, 0, 2) */
+        .custom-note { color: #38bdf8; } /* (0, 0, 1, 0) - Class beats two type tags */
+    </style>
+</head>
+<body>
+    <div class="status-badge">Later rule wins test (Green)</div>
+    <div>
+        <p class="custom-note">Class selector beats div p selector combination (Sky Blue)</p>
+    </div>
+</body>
+</html>

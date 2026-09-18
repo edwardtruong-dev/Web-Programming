@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Topic 22 - CSS Specificity</title>
+    <style>
+        body {
+            background-color: #121212;
+            color: #d4d4d4;
+            font-family: sans-serif;
+            padding: 20px;
+        }
+
+        /* Type selector: (0, 0, 0, 1) */
+        p { color: #71717a; }
+
+        /* Class selector: (0, 0, 1, 0) */
+        .highlight { color: #38bdf8; }
+
+        /* Combination: (0, 0, 1, 1) */
+        p.highlight { color: #a78bfa; }
+
+        /* ID selector: (0, 1, 0, 0) */
+        #special-text { color: #34d399; }
+    </style>
+</head>
+<body>
+    <h2>CSS Specificity Score Demonstration</h2>
+    <p>Ordinary paragraph - matched by Type selector (Gray)</p>
+    <p class="highlight">Paragraph with class - p.highlight wins over .highlight (Purple)</p>
+    <p class="highlight" id="special-text">Paragraph with ID - #special-text wins over all (Emerald)</p>
+</body>
+</html>

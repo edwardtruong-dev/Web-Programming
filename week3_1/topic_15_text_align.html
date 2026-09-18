@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Topic 15 - text-align</title>
+    <style>
+        body {
+            background-color: #0f172a;
+            color: #e2e8f0;
+            font-family: sans-serif;
+            padding: 20px;
+        }
+
+        .box {
+            border: 1px dashed #475569;
+            padding: 12px;
+            margin-bottom: 12px;
+            max-width: 500px;
+        }
+
+        .left { text-align: left; }
+        .center { text-align: center; }
+        .right { text-align: right; }
+
+        /* Centering the block element itself */
+        .centered-container {
+            width: 320px;
+            margin: 20px auto; /* Horizontally center the container */
+            background-color: #1e293b;
+            border: 1px solid #38bdf8;
+            padding: 16px;
+            text-align: center;
+            border-radius: 8px;
+        }
+    </style>
+</head>
+<body>
+    <div class="box left">Left-aligned text (Default)</div>
+    <div class="box center">Center-aligned text inside container</div>
+    <div class="box right">Right-aligned text</div>
+
+    <div class="centered-container">
+        <strong>Centered Box</strong>
+        <p style="font-size: 0.9rem; margin-top: 6px;">Centered using margin: 0 auto</p>
+    </div>
+</body>
+</html>

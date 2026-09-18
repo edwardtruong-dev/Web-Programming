@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Topic 16 - Box Model Padding</title>
+    <style>
+        body {
+            background-color: #121212;
+            color: #ffffff;
+            font-family: sans-serif;
+            padding: 20px;
+        }
+
+        .card {
+            background-color: #1f2937;
+            border: 2px solid #38bdf8;
+            width: 320px;
+            margin-bottom: 14px;
+            border-radius: 6px;
+        }
+
+        .p-zero { padding: 0; }
+        .p-uniform { padding: 20px; }
+        .p-shorthand { padding: 10px 30px; } /* top/bottom 10px, left/right 30px */
+
+        .tag {
+            font-size: 0.75rem;
+            color: #38bdf8;
+            display: block;
+            margin-bottom: 6px;
+        }
+    </style>
+</head>
+<body>
+    <div class="card p-zero">
+        <span class="tag">padding: 0</span>
+        Content touches edges.
+    </div>
+    <div class="card p-uniform">
+        <span class="tag">padding: 20px</span>
+        Content has comfortable breathing room.
+    </div>
+    <div class="card p-shorthand">
+        <span class="tag">padding: 10px 30px</span>
+        Custom vertical and horizontal spacing.
+    </div>
+</body>
+</html>
