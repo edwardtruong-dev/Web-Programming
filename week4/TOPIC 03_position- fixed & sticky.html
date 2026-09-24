@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <style>
+    body { margin: 0; font-family: sans-serif; }
+
+    /* Fixed nav — always visible, sits outside the flow */
+    .fixed-nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      background: #15803d;
+      color: white;
+      padding: 14px 24px;
+      z-index: 100;   /* above everything else */
+      font-weight: bold;
+    }
+
+    .content { padding-top: 60px; } /* offset for fixed nav height */
+
+    /* Sticky section title */
+    .sticky-header {
+      position: sticky;
+      top: 52px;              /* sticks 52px from top (below fixed nav) */
+      background: #dcfce7;
+      border-left: 4px solid #10b981;
+      padding: 10px 16px;
+      font-weight: bold;
+      color: #15803d;
+    }
+
+    .section-body {
+      padding: 20px;
+      height: 260px;    /* tall enough to scroll */
+      background: #f8fafc;
+    }
+  </style>
+</head>
+<body>
+  <nav class="fixed-nav">Edward Fixed Navigation</nav>
+  <div class="content">
+    <div>
+      <div class="sticky-header">Topic A: Computer Systems</div>
+      <div class="section-body">Scroll down to see sticky header lock in place...</div>
+    </div>
+    <div>
+      <div class="sticky-header">Topic B: Web Programming</div>
+      <div class="section-body">Sticky header replaces previous one within container.</div>
+    </div>
+  </div>
+</body>
+</html>

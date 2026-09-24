@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <style>
+    .box { 
+        background: #15803d;
+        width: 140px; 
+        height: 60px; 
+        padding: 10px; 
+        margin: 8px; 
+        color:white; 
+        border-radius: 6px; 
+    }
+    /* static: default — offsets ignored */
+    .static { position: static; }
+
+    /* relative: offsets work — moves FROM its natural position */
+    .relative {
+      position: relative;
+      top:  20px;   /* moves DOWN 20px from natural spot */
+      left: 30px;   /* moves RIGHT 30px */
+      background: #10b981;
+    }
+  </style>
+</head>
+<body>
+  <div class="box static">static (default)</div>
+  <div class="box relative">Edward - Shifted ↓20px →30px</div>
+  <div class="box static">Next element — unaffected by relative shift above</div>
+</body>
+</html>

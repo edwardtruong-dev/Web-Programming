@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <style>
+    /* Named areas layout */
+    .page {
+      display: grid;
+      grid-template-areas:
+        "header  header"
+        "sidebar main"
+        "footer  footer";
+      grid-template-columns: 200px 1fr;
+      grid-template-rows: auto 1fr auto;
+      gap: 12px;
+      min-height: 280px;
+      padding: 12px;
+      background: #ecfdf5;
+      font-family: sans-serif;
+    }
+
+    .page > * { border-radius: 8px; padding: 16px; font-weight: bold; font-size: 13px; }
+
+    header   { grid-area: header;  background: #15803d; color: white; }
+    .sidebar { grid-area: sidebar; background: #dcfce7; color: #15803d; }
+    main     { grid-area: main;    background: white;   border: 2px solid #10b981; color: #1e293b; }
+    footer   { grid-area: footer;  background: #1e293b; color: #94a3b8; }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <header>Edward Header (Spans all columns)</header>
+    <div class="sidebar">Sidebar (200px fixed)</div>
+    <main>Main Content Area (1fr — fills remaining width)</main>
+    <footer>Footer (Spans all columns)</footer>
+  </div>
+</body>
+</html>
