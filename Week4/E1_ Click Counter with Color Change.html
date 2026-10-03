@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html><body style="font-family:system-ui;padding:24px;text-align:center">
+  <style>
+    .done { background: #15803d !important; } /* Edward Emerald Green */
+  </style>
+
+  <button id="clicker" style="
+    padding:14px 32px;font-size:18px;border:none;
+    background:#1e293b;color:white;border-radius:10px;
+    cursor:pointer;transition:background .3s">
+    Click Edward's Button!
+  </button>
+
+  <p id="count" style="font-size:32px;font-weight:bold;margin:16px 0">0</p>
+  <p id="message" style="font-size:16px;color:#666">Keep clicking...</p>
+
+  <script>
+    // 1. Select elements
+    const btn = document.querySelector('#clicker');
+    const countEl = document.querySelector('#count');
+    const msg = document.querySelector('#message');
+    
+    // 2. Counter variable (outside listener)
+    let count = 0;
+
+    // 3. Add click listener
+    btn.addEventListener('click', () => {
+      // 4. Increment and update screen
+      count++;
+      countEl.textContent = count;
+      
+      // 5. Condition for 5 clicks
+      if (count >= 5) {
+        btn.classList.add('done');
+        msg.textContent = '🎉 Awesome, Edward! You clicked 5 times!';
+      }
+    });
+  </script>
+</body></html>
