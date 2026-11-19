@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <style>
+    /* Global design tokens */
+    :root {
+      --color-primary: #15803d;
+      --color-accent:  #10b981;
+      --color-bg:      #ecfdf5;
+      --color-text:    #1e293b;
+      --radius-card:   12px;
+    }
+
+    /* Automatic dark mode — just redefine the tokens */
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --color-bg:   #051a0a;
+        --color-text: #dcfce7;
+      }
+    }
+
+    body { background: var(--color-bg); color: var(--color-text); font-family: sans-serif; padding: 20px; }
+
+    .btn {
+      background: var(--color-primary);
+      color: white; padding: 10px 20px;
+      border: none; border-radius: var(--radius-card);
+      cursor: pointer; font-weight: bold;
+    }
+    .btn:hover { background: var(--color-accent); }
+
+    .card {
+      background: var(--color-bg);
+      border: 2px solid var(--color-accent);
+      border-radius: var(--radius-card);
+      padding: 20px; margin-top: 16px; max-width: 320px;
+    }
+
+    /* Local override — this card uses red as primary */
+    .card.alert { --color-accent: #ef4444; }
+  </style>
+</head>
+<body>
+  <button class="btn">Edward Button</button>
+  <div class="card">Default Edward Theme Card</div>
+  <div class="card alert">Alert Card (Local Variable Override)</div>
+</body>
+</html>

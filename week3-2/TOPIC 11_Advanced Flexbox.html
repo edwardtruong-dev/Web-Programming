@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <style>
+    /* flex-wrap: wrap — cards flow to new rows when narrow */
+    .card-grid {
+      display: flex;
+      flex-wrap: wrap;     /* items wrap to next row */
+      gap: 16px;
+      padding: 16px;
+      background: #ecfdf5;
+      font-family: sans-serif;
+    }
+
+    .card {
+      flex: 1;             /* grow to fill available space */
+      min-width: 160px;    /* but never smaller than 160px */
+      background: #15803d;
+      color: white;
+      padding: 20px;
+      border-radius: 10px;
+      text-align: center;
+      font-size: 14px;
+    }
+
+    .card.featured {
+      order: -1;           /* move to front without changing HTML */
+      flex: 2;             /* twice as wide */
+      background: #10b981;
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+  <div class="card-grid">
+    <div class="card">Algorithms</div>
+    <div class="card featured">FEATURED: Computer Engineering (Edward)</div>
+    <div class="card">Web Programming</div>
+  </div>
+</body>
+</html>

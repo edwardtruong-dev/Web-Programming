@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>TRUONG PHAT THUAN (Edward) - Portfolio</title>
+<style>
+  :root {
+    --primary: #15803d;
+    --accent:  #10b981;
+    --bg:      #f8fafc;
+    --text:    #1e293b;
+    --radius:  12px;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root { --bg: #051a0a; --text: #dcfce7; }
+  }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Segoe UI', sans-serif;
+    line-height: 1.6;
+  }
+
+  /* 1. Fixed Nav */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    background: #1e293b;
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 16px 36px;
+  }
+  nav .logo { color: #ffffff; font-weight: 700; font-size: 1.25rem; letter-spacing: 0.5px; }
+  nav a { color: #ffffff; text-decoration: none; margin-left: 24px; transition: color 0.2s; }
+  nav a:hover { color: var(--accent); }
+
+  /* 2. Hero with @keyframes */
+  @keyframes fadeSlideIn {
+    from { opacity: 0; transform: translateY(28px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  .hero {
+    padding: 130px 20px 70px;
+    text-align: center;
+    background: linear-gradient(135deg, #ecfdf5 0%, #dcfce7 100%);
+    border-bottom: 1px solid #bbf7d0;
+  }
+  .hero h1 {
+    font-size: 2.5rem; color: var(--primary);
+    animation: fadeSlideIn 0.8s ease-out forwards;
+    margin-bottom: 6px;
+    font-weight: 800;
+  }
+  .hero .role {
+    font-size: 1.15rem; color: #4b5563; font-weight: 600; margin-bottom: 8px;
+    animation: fadeSlideIn 0.8s ease-out 0.15s both;
+  }
+  .hero p {
+    font-size: 1.05rem; color: #64748b; max-width: 650px; margin: 0 auto;
+    animation: fadeSlideIn 0.8s ease-out 0.25s both;
+  }
+
+  /* 3. Skills Section & Sticky Heading */
+  .skills-section {
+    max-width: 1050px;
+    margin: 0 auto;
+    padding: 20px 20px 60px;
+  }
+  .sticky-h2 {
+    position: sticky; top: 65px;
+    background: var(--bg);
+    color: var(--primary);
+    font-size: 1.6rem; padding: 14px 0 10px;
+    border-bottom: 3px solid var(--accent);
+    margin-bottom: 24px;
+    z-index: 10;
+  }
+
+  /* 4. Responsive Grid */
+  .grid { display: grid; grid-template-columns: 1fr; gap: 20px; }
+  @media (min-width: 640px) {
+    .grid { grid-template-columns: repeat(3, 1fr); }
+  }
+
+  /* 5. Cards with ::before & Hover transitions */
+  .card {
+    border: 1px solid #e2e8f0;
+    border-radius: var(--radius);
+    padding: 28px 20px;
+    font-weight: 600;
+    background: #ffffff;
+    color: var(--text);
+    box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05);
+    transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s;
+    text-align: center;
+  }
+  .card:hover {
+    transform: translateY(-6px);
+    border-color: var(--accent);
+    box-shadow: 0 12px 28px rgba(21, 128, 61, 0.18);
+  }
+  .card[data-icon]::before {
+    content: attr(data-icon);
+    display: block; font-size: 2.2rem; margin-bottom: 12px;
+  }
+  .card h3 { font-size: 1.15rem; color: var(--primary); margin-bottom: 8px; }
+  .card p { font-size: 0.9rem; color: #64748b; font-weight: normal; line-height: 1.5; }
+</style>
+</head>
+<body>
+  <!-- Fixed Nav -->
+  <nav>
+    <div class="logo">EDWARD</div>
+    <div>
+      <a href="#about">About</a>
+      <a href="#skills">Skills</a>
+      <a href="#contact">Gachon Univ</a>
+    </div>
+  </nav>
+
+  <!-- Hero Section -->
+  <section class="hero" id="about">
+    <h1>TRUONG PHAT THUAN</h1>
+    <div class="role">(EdwardTruong)</div>
+    <p>Computer Engineering student at Gachon University International College, focusing on modern CSS architecture, responsive design, and systems engineering.</p>
+  </section>
+
+  <!-- Skills Section with Sticky Header -->
+  <section class="skills-section" id="skills">
+    <h2 class="sticky-h2">Technical Domains</h2>
+    <div class="grid">
+      <div class="card" data-icon="🌐">
+        <h3>Web & Layouts</h3>
+        <p>Advanced CSS layouts, Flexbox mechanics, 2D Grid systems, and clean HTML5 semantics.</p>
+      </div>
+      <div class="card" data-icon="💻">
+        <h3>Computer Engineering</h3>
+        <p>Foundations in computer architecture, hardware-software integration, and system optimization.</p>
+      </div>
+      <div class="card" data-icon="⚡">
+        <h3>Software & Logic</h3>
+        <p>Clean coding methodologies, algorithmic thinking, and modern responsive UI development.</p>
+      </div>
+    </div>
+  </section>
+</body>
+</html>

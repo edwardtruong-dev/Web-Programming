@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <style>
+    body { font-family: sans-serif; padding: 20px; }
+
+    .parent-box {
+      border: 3px solid #15803d;
+      color: #15803d;
+      padding: 16px;
+      font-weight: bold;
+    }
+
+    /* border does NOT inherit by default — inherit keyword forces it */
+    .child-box {
+      border: inherit;
+      padding: 8px;
+      margin-top: 10px;
+    }
+  </style>
+</head>
+<body>
+  <div class="parent-box">
+    Parent Box (Border: 3px solid #15803d)
+    <div class="child-box">Child Box with border: inherit</div>
+  </div>
+</body>
+</html>

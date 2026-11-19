@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Topic 03 - CSS Syntax</title>
+    <style>
+        body {
+            background-color: #1e1e1e;
+            color: #d4d4d4;
+            font-family: sans-serif;
+        }
+
+        /* My heading style */
+        h1 {
+            color: #4ec9b0;
+            font-size: 2rem;
+            font-weight: bold;
+            text-align: center;
+        }
+
+        /* Paragraph formatting */
+        p {
+            line-height: 1.7;
+            max-width: 65ch;
+            margin: 0 auto;
+        }
+
+        /* Note to self: do not forget the semicolon ; */
+    </style>
+</head>
+<body>
+    <h1>Learning Web Programming at Gachon</h1>
+    <p>My name is Thuan. Today I am learning basic CSS syntax. A rule always has a selector, a property, and a value separated by a colon.</p>
+</body>
+</html>

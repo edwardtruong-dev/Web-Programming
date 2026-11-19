@@ -1,0 +1,532 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Student Registration Form — Truong Phat Thuan (Edward)</title>
+  <style>
+    :root {
+      --primary: #15803d;
+      --accent: #10b981;
+      --bg: #f8fafc;
+      --card: #ffffff;
+      --text: #1e293b;
+      --border: #e2e8f0;
+      --radius: 12px;
+      --subtext: #64748b;
+      --hero-bg: linear-gradient(135deg, #ecfdf5 0%, #dcfce7 100%);
+      --error: #dc2626;
+      --error-bg: #fef2f2;
+      --success-bg: #ecfdf5;
+    }
+
+    [data-theme="dark"] {
+      --primary: #10b981;
+      --accent: #34d399;
+      --bg: #051a0a;
+      --card: #0b2017;
+      --text: #dcfce7;
+      --border: #14532d;
+      --subtext: #94a3b8;
+      --hero-bg: linear-gradient(135deg, #051a0a 0%, #0a381d 100%);
+      --error: #f87171;
+      --error-bg: rgba(220, 38, 38, 0.14);
+      --success-bg: rgba(16, 185, 129, 0.16);
+    }
+
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+      line-height: 1.6;
+      min-height: 100vh;
+      padding: 32px 16px 60px;
+      transition: background 0.3s ease, color 0.3s ease;
+    }
+
+    .container {
+      max-width: 640px;
+      margin: 0 auto;
+    }
+
+    /* Top Bar */
+    .top-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 24px;
+      gap: 12px;
+    }
+
+    .back-link {
+      color: var(--primary);
+      text-decoration: none;
+      font-weight: 700;
+      font-size: 0.92rem;
+    }
+
+    .back-link:hover {
+      text-decoration: underline;
+    }
+
+    .theme-toggle {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: var(--card);
+      border: 1px solid var(--border);
+      padding: 6px 14px;
+      border-radius: 9999px;
+      cursor: pointer;
+      color: var(--text);
+      font-size: 0.8rem;
+      font-weight: 600;
+      transition: all 0.25s ease;
+    }
+
+    .theme-toggle:hover {
+      border-color: var(--accent);
+    }
+
+    /* Header Card */
+    .page-header {
+      background: var(--hero-bg);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 28px 24px;
+      text-align: center;
+      margin-bottom: 24px;
+    }
+
+    .page-header h1 {
+      color: var(--primary);
+      font-size: 1.75rem;
+      font-weight: 800;
+      margin-bottom: 6px;
+    }
+
+    .page-header p {
+      color: var(--subtext);
+      font-size: 0.92rem;
+    }
+
+    /* Form Card */
+    .form-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 28px 24px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+    }
+
+    fieldset {
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 20px;
+      margin-bottom: 20px;
+      background: var(--bg);
+    }
+
+    legend {
+      padding: 0 10px;
+      font-weight: 700;
+      font-size: 0.95rem;
+      color: var(--primary);
+    }
+
+    .form-group {
+      margin-bottom: 16px;
+    }
+
+    .form-group:last-child {
+      margin-bottom: 0;
+    }
+
+    label {
+      display: block;
+      font-size: 0.9rem;
+      font-weight: 600;
+      margin-bottom: 6px;
+      color: var(--text);
+    }
+
+    .req {
+      color: var(--error);
+    }
+
+    input[type="text"],
+    input[type="email"],
+    input[type="password"] {
+      width: 100%;
+      padding: 11px 14px;
+      border: 2px solid var(--border);
+      border-radius: 8px;
+      font-size: 0.95rem;
+      font-family: inherit;
+      background: var(--card);
+      color: var(--text);
+      outline: none;
+      transition: border-color 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    input:focus {
+      border-color: var(--primary);
+      box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.18);
+    }
+
+    /* Visual states driven by aria-invalid */
+    input[aria-invalid="true"] {
+      border-color: var(--error);
+      background: var(--error-bg);
+    }
+
+    input[aria-invalid="false"] {
+      border-color: var(--accent);
+    }
+
+    .error-msg {
+      display: block;
+      min-height: 20px;
+      margin-top: 5px;
+      font-size: 0.82rem;
+      font-weight: 600;
+      color: var(--error);
+    }
+
+    .submit-btn {
+      width: 100%;
+      padding: 13px 20px;
+      border: none;
+      border-radius: 8px;
+      font-size: 1rem;
+      font-weight: 700;
+      background: var(--primary);
+      color: #ffffff;
+      cursor: pointer;
+      transition: opacity 0.25s ease, transform 0.15s ease;
+    }
+
+    .submit-btn:hover:not(:disabled) {
+      opacity: 0.92;
+      transform: translateY(-1px);
+    }
+
+    .submit-btn:disabled {
+      opacity: 0.45;
+      cursor: not-allowed;
+      background: #94a3b8;
+    }
+
+    /* Success Alert Box */
+    .success-box {
+      margin-top: 20px;
+      padding: 16px 18px;
+      border-radius: 10px;
+      border: 2px solid var(--accent);
+      background: var(--success-bg);
+      color: var(--primary);
+      font-weight: 600;
+      font-size: 0.95rem;
+      line-height: 1.5;
+    }
+
+    .success-box[hidden] {
+      display: none;
+    }
+
+    .success-box strong {
+      display: block;
+      font-size: 1.05rem;
+      margin-bottom: 4px;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <div class="top-bar">
+      <a href="../index.html" class="back-link">← Back to Edward's Portfolio</a>
+      <button type="button" class="theme-toggle" id="theme-btn">
+        <span id="theme-icon">🌙</span>
+        <span id="theme-text">Dark Mode</span>
+      </button>
+    </div>
+
+    <header class="page-header">
+      <h1>Gachon Student Registration</h1>
+      <p>TRUONG PHAT THUAN (Edward) • Computer Engineering • Real-Time JS &amp; ARIA Validation</p>
+    </header>
+
+    <main class="form-card">
+      <!-- novalidate disables default browser tooltip bubbles so JS takes full control -->
+      <form id="reg-form" action="/register" method="POST" novalidate>
+        <fieldset>
+          <legend>Student Information</legend>
+
+          <div class="form-group">
+            <label for="sname">Full Name <span class="req">*</span></label>
+            <input
+              type="text"
+              id="sname"
+              name="sname"
+              placeholder="e.g. Truong Phat Thuan"
+              required
+              minlength="2"
+              maxlength="50"
+              aria-describedby="err-sname"
+            >
+            <span class="error-msg" id="err-sname" role="alert"></span>
+          </div>
+
+          <div class="form-group">
+            <label for="sid">Student ID (9 digits) <span class="req">*</span></label>
+            <input
+              type="text"
+              id="sid"
+              name="sid"
+              placeholder="e.g. 202431234"
+              inputmode="numeric"
+              required
+              pattern="\d{9}"
+              aria-describedby="err-sid"
+            >
+            <span class="error-msg" id="err-sid" role="alert"></span>
+          </div>
+
+          <div class="form-group">
+            <label for="semail">Gachon Email <span class="req">*</span></label>
+            <input
+              type="email"
+              id="semail"
+              name="semail"
+              placeholder="e.g. edward@gachon.ac.kr"
+              required
+              aria-describedby="err-semail"
+            >
+            <span class="error-msg" id="err-semail" role="alert"></span>
+          </div>
+        </fieldset>
+
+        <fieldset>
+          <legend>Account Security</legend>
+
+          <div class="form-group">
+            <label for="spw">Password (min 8 characters) <span class="req">*</span></label>
+            <input
+              type="password"
+              id="spw"
+              name="spw"
+              placeholder="Enter at least 8 characters"
+              required
+              minlength="8"
+              aria-describedby="err-spw"
+            >
+            <span class="error-msg" id="err-spw" role="alert"></span>
+          </div>
+
+          <div class="form-group">
+            <label for="spw2">Confirm Password <span class="req">*</span></label>
+            <input
+              type="password"
+              id="spw2"
+              name="spw2"
+              placeholder="Re-enter your password"
+              required
+              aria-describedby="err-spw2"
+            >
+            <span class="error-msg" id="err-spw2" role="alert"></span>
+          </div>
+        </fieldset>
+
+        <button type="submit" id="submit-btn" class="submit-btn" disabled>Register Student Account</button>
+
+        <div id="reg-success-box" class="success-box" role="status" aria-live="polite" hidden>
+          <strong>✓ Registration Successful!</strong>
+          <span id="reg-success-details"></span>
+        </div>
+      </form>
+    </main>
+  </div>
+
+  <script>
+    // 0. Dark Mode Toggle
+    const themeBtn = document.getElementById('theme-btn');
+    const themeIcon = document.getElementById('theme-icon');
+    const themeText = document.getElementById('theme-text');
+
+    themeBtn.addEventListener('click', () => {
+      const root = document.documentElement;
+      const isDark = root.getAttribute('data-theme') === 'dark';
+      if (isDark) {
+        root.removeAttribute('data-theme');
+        themeIcon.textContent = '🌙';
+        themeText.textContent = 'Dark Mode';
+      } else {
+        root.setAttribute('data-theme', 'dark');
+        themeIcon.textContent = '☀️';
+        themeText.textContent = 'Light Mode';
+      }
+    });
+
+    // 1. Form References & Helpers
+    const form = document.getElementById('reg-form');
+    const submitBtn = document.getElementById('submit-btn');
+    const successBox = document.getElementById('reg-success-box');
+    const successDetails = document.getElementById('reg-success-details');
+
+    const snameInput = document.getElementById('sname');
+    const sidInput = document.getElementById('sid');
+    const semailInput = document.getElementById('semail');
+    const pwInput = document.getElementById('spw');
+    const pw2Input = document.getElementById('spw2');
+
+    function markValid(input, errSpan) {
+      input.setAttribute('aria-invalid', 'false');
+      errSpan.textContent = '';
+    }
+
+    function markInvalid(input, errSpan, message) {
+      input.setAttribute('aria-invalid', 'true');
+      errSpan.textContent = message;
+    }
+
+    // 2. Per-field Validators
+    function validateName() {
+      const err = document.getElementById('err-sname');
+      if (snameInput.validity.valueMissing) {
+        markInvalid(snameInput, err, 'Full name is required.');
+        return false;
+      }
+      if (snameInput.validity.tooShort) {
+        markInvalid(snameInput, err, 'Full name must be at least 2 characters.');
+        return false;
+      }
+      markValid(snameInput, err);
+      return true;
+    }
+
+    function validateSid() {
+      const err = document.getElementById('err-sid');
+      if (sidInput.validity.valueMissing) {
+        markInvalid(sidInput, err, 'Student ID is required.');
+        return false;
+      }
+      if (!/^\d{9}$/.test(sidInput.value)) {
+        markInvalid(sidInput, err, 'Student ID must be exactly 9 digits (e.g. 202431234).');
+        return false;
+      }
+      markValid(sidInput, err);
+      return true;
+    }
+
+    function validateEmail() {
+      const err = document.getElementById('err-semail');
+      if (semailInput.validity.valueMissing) {
+        markInvalid(semailInput, err, 'Email address is required.');
+        return false;
+      }
+      if (semailInput.validity.typeMismatch) {
+        markInvalid(semailInput, err, 'Please enter a valid email address (e.g. edward@gachon.ac.kr).');
+        return false;
+      }
+      markValid(semailInput, err);
+      return true;
+    }
+
+    function validatePassword() {
+      const err = document.getElementById('err-spw');
+      if (pwInput.validity.valueMissing) {
+        markInvalid(pwInput, err, 'Password is required.');
+        return false;
+      }
+      if (pwInput.validity.tooShort) {
+        markInvalid(pwInput, err, 'Password must be at least 8 characters long.');
+        return false;
+      }
+      markValid(pwInput, err);
+      return true;
+    }
+
+    function validateConfirmPassword() {
+      const err = document.getElementById('err-spw2');
+      if (pw2Input.validity.valueMissing) {
+        pw2Input.setCustomValidity('');
+        markInvalid(pw2Input, err, 'Please confirm your password.');
+        return false;
+      }
+      if (pw2Input.value !== pwInput.value) {
+        pw2Input.setCustomValidity('Passwords do not match');
+        markInvalid(pw2Input, err, 'Passwords do not match.');
+        return false;
+      }
+      pw2Input.setCustomValidity('');
+      markValid(pw2Input, err);
+      return true;
+    }
+
+    function updateSubmitState() {
+      submitBtn.disabled = !form.checkValidity();
+    }
+
+    // 3. Real-time input listeners
+    snameInput.addEventListener('input', () => {
+      validateName();
+      updateSubmitState();
+    });
+
+    sidInput.addEventListener('input', () => {
+      validateSid();
+      updateSubmitState();
+    });
+
+    semailInput.addEventListener('input', () => {
+      validateEmail();
+      updateSubmitState();
+    });
+
+    pwInput.addEventListener('input', () => {
+      validatePassword();
+      if (pw2Input.value.length > 0) {
+        validateConfirmPassword();
+      }
+      updateSubmitState();
+    });
+
+    pw2Input.addEventListener('input', () => {
+      validateConfirmPassword();
+      updateSubmitState();
+    });
+
+    // 4. Final Submit Gate
+    form.addEventListener('submit', (event) => {
+      event.preventDefault();
+
+      const isNameOk = validateName();
+      const isSidOk = validateSid();
+      const isEmailOk = validateEmail();
+      const isPwOk = validatePassword();
+      const isPw2Ok = validateConfirmPassword();
+
+      if (isNameOk && isSidOk && isEmailOk && isPwOk && isPw2Ok) {
+        successDetails.textContent = `Welcome, ${snameInput.value.trim()} (ID: ${sidInput.value}) — registered with ${semailInput.value.trim()}.`;
+        successBox.hidden = false;
+
+        form.reset();
+        [snameInput, sidInput, semailInput, pwInput, pw2Input].forEach((input) => {
+          input.removeAttribute('aria-invalid');
+        });
+        pw2Input.setCustomValidity('');
+        submitBtn.disabled = true;
+      } else {
+        successBox.hidden = true;
+      }
+    });
+  </script>
+</body>
+</html>

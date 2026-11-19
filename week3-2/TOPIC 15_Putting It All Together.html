@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    :root {
+      --primary: #15803d;
+      --accent:  #10b981;
+      --bg:      #ecfdf5;
+      --card:    #ffffff;
+      --text:    #1e293b;
+      --radius:  12px;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body { background: var(--bg); font-family: sans-serif; padding: 24px; color: var(--text); }
+
+    /* 1-column on mobile, 3-column on tablet+ */
+    .grid { display: grid; grid-template-columns: 1fr; gap: 20px; }
+    @media (min-width: 640px) {
+      .grid { grid-template-columns: repeat(3, 1fr); }
+    }
+
+    .card {
+      background: var(--card);
+      border: 2px solid #e2e8f0;
+      border-radius: var(--radius);
+      padding: 24px;
+      position: relative;           /* anchor for absolute badge */
+      transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s;
+    }
+    .card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 12px 28px rgba(21,128,61,0.18);
+      border-color: var(--accent);
+    }
+
+    /* Absolute badge */
+    .badge {
+      position: absolute; top: -10px; right: 16px;
+      background: var(--primary); color: white;
+      font-size: 11px; font-weight: 700;
+      padding: 3px 10px; border-radius: 20px;
+    }
+
+    /* ::before icon */
+    .card-title::before { content: '💻 '; }
+
+    .card-title { font-size: 17px; font-weight: 700; color: var(--primary); margin-bottom: 8px; }
+    .card-desc  { font-size: 13px; color: #64748b; line-height: 1.5; }
+  </style>
+</head>
+<body>
+  <div class="grid">
+    <div class="card">
+      <span class="badge">CORE</span>
+      <h3 class="card-title">Computer Systems</h3>
+      <p class="card-desc">Architecture and hardware optimization at Gachon Univ.</p>
+    </div>
+    <div class="card">
+      <h3 class="card-title">Web Programming</h3>
+      <p class="card-desc">Responsive UI layouts, Flexbox mechanics and CSS Grid.</p>
+    </div>
+    <div class="card">
+      <span class="badge">LOGIC</span>
+      <h3 class="card-title">Software Engineering</h3>
+      <p class="card-desc">Algorithmic thinking, clean code design and maintenance.</p>
+    </div>
+  </div>
+</body>
+</html>

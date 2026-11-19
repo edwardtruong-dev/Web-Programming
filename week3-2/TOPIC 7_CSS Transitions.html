@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <style>
+    .card {
+      width: 240px;
+      padding: 24px;
+      background: #ecfdf5;
+      border: 2px solid #10b981;
+      border-radius: 12px;
+      color: #15803d;
+      font-size: 15px;
+      font-family: sans-serif;
+      margin: 20px;
+      /* transition on BASE state — animates BOTH forward and reverse */
+      transition: background  0.3s ease,
+                  transform   0.2s ease,
+                  box-shadow  0.3s ease;
+    }
+
+    .card:hover {
+      background: #15803d;
+      color: white;
+      transform: translateY(-6px);
+      box-shadow: 0 12px 28px rgba(21,128,61,0.25);
+    }
+  </style>
+</head>
+<body>
+  <div class="card">Hover over Edward's Card</div>
+</body>
+</html>

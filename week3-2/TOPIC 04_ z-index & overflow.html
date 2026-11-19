@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <style>
+    .stack { position: relative; height: 180px; font-family: sans-serif; }
+
+    .layer { position: absolute; width: 180px; height: 90px;
+              padding: 10px; border-radius: 8px; font-size: 13px; font-weight: bold; }
+
+    .layer-1 { background:#15803d; color:white; top:20px; left:20px; z-index:1; }
+    .layer-2 { background:#10b981; color:white; top:50px; left:80px; z-index:2; }
+    .layer-3 { background:#dcfce7; color:#15803d; top:80px; left:140px; z-index:3; border: 1px solid #10b981; }
+
+    /* overflow demo */
+    .overflow-demo {
+      width: 240px;
+      height: 80px;
+      overflow: auto;   /* try: scroll | auto | visible */
+      border: 2px solid #10b981;
+      padding: 8px;
+      margin-top: 16px;
+      font-size: 13px;
+      line-height: 1.5;
+      font-family: sans-serif;
+    }
+  </style>
+</head>
+<body>
+  <div class="stack">
+    <div class="layer layer-1">Edward Layer 1 (z-index: 1)</div>
+    <div class="layer layer-2">Edward Layer 2 (z-index: 2)</div>
+    <div class="layer layer-3">Edward Layer 3 (z-index: 3)</div>
+  </div>
+  <div class="overflow-demo">
+    overflow: hidden will clip text exceeding this container box.
+    Edward Truong is studying Computer Engineering at Gachon University. Extra content is cleanly cut off.
+  </div>
+</body>
+</html>

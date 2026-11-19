@@ -1,0 +1,519 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Random Joke Fetcher — Truong Phat Thuan (Edward)</title>
+  <style>
+    :root {
+      --primary: #15803d;
+      --accent: #10b981;
+      --bg: #ecfdf5;
+      --card: #ffffff;
+      --text: #1e293b;
+      --subtext: #64748b;
+      --border: #d1fae5;
+      --radius: 16px;
+      --error: #dc2626;
+      --error-bg: #fef2f2;
+    }
+
+    [data-theme="dark"] {
+      --primary: #10b981;
+      --accent: #34d399;
+      --bg: #051a0a;
+      --card: #0b2017;
+      --text: #dcfce7;
+      --subtext: #94a3b8;
+      --border: #14532d;
+      --error: #f87171;
+      --error-bg: rgba(220, 38, 38, 0.14);
+    }
+
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 24px 16px;
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+      line-height: 1.6;
+      transition: background 0.3s ease, color 0.3s ease;
+    }
+
+    /* Centered Card Layout (giống Week4 E2) */
+    .joke-card-container {
+      width: 100%;
+      max-width: 580px;
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 32px 28px;
+      box-shadow: 0 12px 30px rgba(21, 128, 61, 0.12);
+      transition: background 0.3s ease, border-color 0.3s ease;
+    }
+
+    .card-top-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+      gap: 12px;
+    }
+
+    .back-link {
+      color: var(--primary);
+      text-decoration: none;
+      font-weight: 700;
+      font-size: 0.88rem;
+    }
+
+    .back-link:hover {
+      text-decoration: underline;
+    }
+
+    .theme-toggle {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: var(--bg);
+      border: 1px solid var(--border);
+      padding: 5px 12px;
+      border-radius: 9999px;
+      cursor: pointer;
+      color: var(--text);
+      font-size: 0.78rem;
+      font-weight: 600;
+      transition: all 0.25s ease;
+    }
+
+    .theme-toggle:hover {
+      border-color: var(--accent);
+    }
+
+    .header-box {
+      text-align: center;
+      margin-bottom: 24px;
+    }
+
+    .badge {
+      display: inline-block;
+      background: var(--bg);
+      color: var(--primary);
+      border: 1px solid var(--border);
+      padding: 4px 12px;
+      border-radius: 9999px;
+      font-size: 0.78rem;
+      font-weight: 700;
+      margin-bottom: 10px;
+    }
+
+    h1 {
+      color: var(--primary);
+      font-size: 1.7rem;
+      font-weight: 800;
+      margin-bottom: 4px;
+    }
+
+    .subtitle {
+      color: var(--subtext);
+      font-size: 0.9rem;
+    }
+
+    /* Controls */
+    .btn-row {
+      display: flex;
+      justify-content: center;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin-bottom: 18px;
+    }
+
+    .btn-primary {
+      padding: 11px 20px;
+      border: none;
+      border-radius: 10px;
+      background: var(--primary);
+      color: #ffffff;
+      font-size: 0.95rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: opacity 0.2s ease, transform 0.15s ease;
+    }
+
+    .btn-primary:hover:not(:disabled) {
+      opacity: 0.92;
+      transform: translateY(-1px);
+    }
+
+    .btn-secondary {
+      padding: 11px 18px;
+      border: 2px solid var(--primary);
+      border-radius: 10px;
+      background: transparent;
+      color: var(--primary);
+      font-size: 0.95rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: background 0.2s ease, color 0.2s ease, opacity 0.2s ease;
+    }
+
+    .btn-secondary:hover:not(:disabled) {
+      background: var(--primary);
+      color: #ffffff;
+    }
+
+    .btn-primary:disabled,
+    .btn-secondary:disabled {
+      opacity: 0.45;
+      cursor: not-allowed;
+    }
+
+    /* Status & Spinner (từ Week3_2 E3) */
+    .status-bar {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      min-height: 28px;
+      margin-bottom: 16px;
+    }
+
+    .spinner {
+      width: 20px;
+      height: 20px;
+      border: 3px solid var(--border);
+      border-top-color: var(--primary);
+      border-radius: 50%;
+      animation: spin 0.75s linear infinite;
+    }
+
+    .spinner[hidden] {
+      display: none;
+    }
+
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+
+    .status-text {
+      font-size: 0.9rem;
+      color: var(--subtext);
+      font-weight: 600;
+    }
+
+    .status-text.is-error {
+      color: var(--error);
+    }
+
+    /* Separate Setup & Punchline Elements */
+    .joke-result {
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-left: 5px solid var(--accent);
+      border-radius: 12px;
+      padding: 20px;
+      margin-bottom: 24px;
+    }
+
+    .joke-result[hidden] {
+      display: none;
+    }
+
+    .joke-setup {
+      font-size: 1.05rem;
+      font-weight: 700;
+      color: var(--text);
+      margin-bottom: 12px;
+    }
+
+    .joke-punchline {
+      font-size: 1.1rem;
+      font-weight: 800;
+      color: var(--primary);
+    }
+
+    /* Favourites List (localStorage) */
+    .fav-section {
+      border-top: 1px solid var(--border);
+      padding-top: 20px;
+    }
+
+    .fav-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 12px;
+    }
+
+    .fav-header h2 {
+      font-size: 1rem;
+      color: var(--text);
+    }
+
+    .fav-count {
+      font-size: 0.8rem;
+      font-weight: 700;
+      color: var(--primary);
+      background: var(--bg);
+      padding: 2px 10px;
+      border-radius: 9999px;
+      border: 1px solid var(--border);
+    }
+
+    .fav-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .fav-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 12px;
+      padding: 12px 14px;
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      font-size: 0.9rem;
+    }
+
+    .fav-item-body strong {
+      display: block;
+      color: var(--text);
+      margin-bottom: 4px;
+    }
+
+    .fav-item-body span {
+      color: var(--primary);
+      font-weight: 600;
+    }
+
+    .del-btn {
+      background: var(--error);
+      color: #ffffff;
+      border: none;
+      border-radius: 6px;
+      padding: 5px 10px;
+      font-size: 0.78rem;
+      font-weight: 700;
+      cursor: pointer;
+      flex-shrink: 0;
+    }
+
+    .empty-msg {
+      text-align: center;
+      color: var(--subtext);
+      font-size: 0.88rem;
+      padding: 8px 0;
+    }
+  </style>
+</head>
+<body>
+
+  <main class="joke-card-container">
+    <div class="card-top-bar">
+      <a href="../index.html" class="back-link">← Back to Portfolio</a>
+      <button type="button" class="theme-toggle" id="theme-btn">
+        <span id="theme-icon">🌙</span>
+        <span id="theme-text">Dark Mode</span>
+      </button>
+    </div>
+
+    <div class="header-box">
+      <span class="badge">Week 6 • Fetch API &amp; Async/Await</span>
+      <h1>Random Joke Fetcher</h1>
+      <p class="subtitle">TRUONG PHAT THUAN (Edward) • Gachon University</p>
+    </div>
+
+    <div class="btn-row">
+      <button type="button" id="load-btn" class="btn-primary">🎲 Load a Joke</button>
+      <button type="button" id="fav-btn" class="btn-secondary" disabled>★ Save Favourite</button>
+    </div>
+
+    <!-- Loading Spinner + Status -->
+    <div class="status-bar" aria-live="polite">
+      <span id="spinner" class="spinner" hidden></span>
+      <span id="status-text" class="status-text">Click "Load a Joke" to fetch from Official Joke API.</span>
+    </div>
+
+    <!-- Separate DOM elements for setup & punchline -->
+    <section id="joke-box" class="joke-result" hidden>
+      <p id="setup-el" class="joke-setup"></p>
+      <p id="punchline-el" class="joke-punchline"></p>
+    </section>
+
+    <!-- Extra Credit: Saved Favourites in localStorage -->
+    <section class="fav-section">
+      <div class="fav-header">
+        <h2>Saved Favourites</h2>
+        <span id="fav-count" class="fav-count">0</span>
+      </div>
+      <ul id="fav-list" class="fav-list"></ul>
+      <p id="empty-fav" class="empty-msg">No favourite jokes saved yet.</p>
+    </section>
+  </main>
+
+  <script>
+    const API_URL = 'https://official-joke-api.appspot.com/random_joke';
+    const STORAGE_KEY = 'edward_w6_favourite_jokes';
+
+    const themeBtn = document.getElementById('theme-btn');
+    const themeIcon = document.getElementById('theme-icon');
+    const themeText = document.getElementById('theme-text');
+
+    const loadBtn = document.getElementById('load-btn');
+    const favBtn = document.getElementById('fav-btn');
+    const spinner = document.getElementById('spinner');
+    const statusText = document.getElementById('status-text');
+    const jokeBox = document.getElementById('joke-box');
+    const setupEl = document.getElementById('setup-el');
+    const punchlineEl = document.getElementById('punchline-el');
+    const favList = document.getElementById('fav-list');
+    const favCount = document.getElementById('fav-count');
+    const emptyFav = document.getElementById('empty-fav');
+
+    let activeJoke = null;
+
+    // Dark Mode Toggle
+    themeBtn.addEventListener('click', () => {
+      const root = document.documentElement;
+      const isDark = root.getAttribute('data-theme') === 'dark';
+      if (isDark) {
+        root.removeAttribute('data-theme');
+        themeIcon.textContent = '🌙';
+        themeText.textContent = 'Dark Mode';
+      } else {
+        root.setAttribute('data-theme', 'dark');
+        themeIcon.textContent = '☀️';
+        themeText.textContent = 'Light Mode';
+      }
+    });
+
+    // Core Fetch API + Async/Await function
+    async function loadJoke() {
+      loadBtn.disabled = true;
+      favBtn.disabled = true;
+      spinner.hidden = false;
+      statusText.classList.remove('is-error');
+      statusText.textContent = 'Loading...';
+
+      try {
+        const res = await fetch(API_URL);
+
+        if (!res.ok) {
+          throw new Error(`HTTP Error ${res.status}: Failed to fetch joke.`);
+        }
+
+        const data = await res.json();
+        activeJoke = {
+          id: data.id || Date.now(),
+          setup: data.setup,
+          punchline: data.punchline
+        };
+
+        setupEl.textContent = activeJoke.setup;
+        punchlineEl.textContent = activeJoke.punchline;
+        jokeBox.hidden = false;
+        statusText.textContent = 'Joke loaded successfully!';
+        favBtn.disabled = false;
+      } catch (error) {
+        statusText.classList.add('is-error');
+        statusText.textContent = `Could not load joke (${error.message}). Check your connection and try again.`;
+      } finally {
+        spinner.hidden = true;
+        loadBtn.disabled = false;
+      }
+    }
+
+    loadBtn.addEventListener('click', loadJoke);
+
+    // Extra Credit: localStorage Favourites
+    function readFavourites() {
+      try {
+        return JSON.parse(localStorage.getItem(STORAGE_KEY)) || [];
+      } catch {
+        return [];
+      }
+    }
+
+    function writeFavourites(items) {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(items));
+    }
+
+    function renderFavourites() {
+      const items = readFavourites();
+      favList.innerHTML = '';
+      favCount.textContent = items.length;
+      emptyFav.style.display = items.length === 0 ? 'block' : 'none';
+
+      items.forEach((joke, index) => {
+        const li = document.createElement('li');
+        li.className = 'fav-item';
+
+        const body = document.createElement('div');
+        body.className = 'fav-item-body';
+
+        const strong = document.createElement('strong');
+        strong.textContent = joke.setup;
+
+        const span = document.createElement('span');
+        span.textContent = joke.punchline;
+
+        const delBtn = document.createElement('button');
+        delBtn.type = 'button';
+        delBtn.className = 'del-btn';
+        delBtn.textContent = '✕ Remove';
+        delBtn.dataset.index = index;
+
+        body.appendChild(strong);
+        body.appendChild(span);
+        li.appendChild(body);
+        li.appendChild(delBtn);
+        favList.appendChild(li);
+      });
+    }
+
+    favBtn.addEventListener('click', () => {
+      if (!activeJoke) return;
+      const items = readFavourites();
+      const duplicate = items.some((item) => item.setup === activeJoke.setup);
+
+      if (duplicate) {
+        statusText.classList.remove('is-error');
+        statusText.textContent = 'This joke is already saved in your favourites!';
+        return;
+      }
+
+      items.unshift(activeJoke);
+      writeFavourites(items);
+      renderFavourites();
+      statusText.classList.remove('is-error');
+      statusText.textContent = '★ Saved to favourites!';
+    });
+
+    favList.addEventListener('click', (event) => {
+      if (event.target.classList.contains('del-btn')) {
+        const idx = Number(event.target.dataset.index);
+        const items = readFavourites();
+        items.splice(idx, 1);
+        writeFavourites(items);
+        renderFavourites();
+      }
+    });
+
+    // Load saved favourites on initial page load / F5
+    renderFavourites();
+  </script>
+</body>
+</html>

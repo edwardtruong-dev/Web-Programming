@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    /* BASE STYLES — mobile-first (< 640px) */
+    body { font-family: sans-serif; padding: 16px; background: #f8fafc; }
+
+    .grid { display: flex; flex-direction: column; gap: 16px; }
+
+    .card {
+      background: white; border: 2px solid #10b981;
+      border-radius: 10px; padding: 20px;
+      color: #15803d; font-weight: bold;
+    }
+
+    /* TABLET & DESKTOP ≥ 640px — multi-column row */
+    @media (min-width: 640px) {
+      .grid { flex-direction: row; }
+      .card { flex: 1; }
+    }
+  </style>
+</head>
+<body>
+  <div class="grid">
+    <div class="card">Edward Domain 1</div>
+    <div class="card">Edward Domain 2</div>
+    <div class="card">Edward Domain 3</div>
+  </div>
+</body>
+</html>

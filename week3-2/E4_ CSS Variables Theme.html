@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head><meta charset="UTF-8">
+<style>
+  :root {
+    --primary: #15803d;
+    --accent:  #10b981;
+    --bg:      #ecfdf5;
+    --text:    #1e293b;
+    --radius:  10px;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg:   #051a0a;
+      --text: #dcfce7;
+    }
+  }
+
+  body { background: var(--bg); color: var(--text); font-family: 'Segoe UI', sans-serif; padding: 20px; }
+
+  .btn {
+    background: var(--primary);
+    color: white; border: none; padding: 10px 20px;
+    border-radius: var(--radius);
+    cursor: pointer;
+    font-weight: 600;
+    transition: background 0.2s;
+  }
+  .btn:hover { background: var(--accent); }
+
+  .card {
+    background: var(--bg);
+    border: 2px solid var(--accent);
+    border-radius: var(--radius);
+    padding: 20px; margin-top: 16px;
+    color: var(--text);
+  }
+</style>
+</head>
+<body>
+  <button class="btn">Edward Action</button>
+  <div class="card">Themed card customized for Truong Phat Thuan</div>
+</body>
+</html>

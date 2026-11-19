@@ -20,7 +20,10 @@
     <div class="nav-links">
       <a href="#about">About</a>
       <a href="#skills">Skills</a>
+      <a href="#contact">Contact</a>
+      <a href="#registration">Registration</a>
       <a href="#tasks">Task Manager</a>
+      <a href="#jokes">Joke Fetcher</a>
     </div>
   </nav>
 
@@ -58,6 +61,87 @@
     <p id="no-results" class="empty-msg" style="margin-top: 20px; font-size: 16px;">No technical domains found matching your search.</p>
   </section>
 
+  <!-- =========================================
+       W6-MON: CONTACT FORM & REGISTRATION LINK
+       ========================================= -->
+  <section class="section-container" id="contact">
+    <h2 class="sticky-h2">Contact &amp; Student Portal</h2>
+
+    <div class="contact-layout">
+      <!-- Homework: Contact Form với HTML5 Validation -->
+      <div class="contact-wrapper">
+        <h3>Get In Touch</h3>
+        <p class="contact-subtitle">Send a message regarding projects, coursework, or collaboration.</p>
+
+        <form id="contact-form" class="styled-form" novalidate>
+          <div class="form-group">
+            <label for="contact-name">Full Name <span class="req">*</span></label>
+            <input
+              type="text"
+              id="contact-name"
+              name="name"
+              class="form-control"
+              placeholder="e.g. Truong Phat Thuan"
+              required
+              minlength="2"
+              maxlength="50"
+            >
+          </div>
+
+          <div class="form-group">
+            <label for="contact-email">Email Address <span class="req">*</span></label>
+            <input
+              type="email"
+              id="contact-email"
+              name="email"
+              class="form-control"
+              placeholder="e.g. edward@gachon.ac.kr"
+              required
+            >
+          </div>
+
+          <div class="form-group">
+            <label for="contact-subject">Subject <span class="req">*</span></label>
+            <input
+              type="text"
+              id="contact-subject"
+              name="subject"
+              class="form-control"
+              placeholder="e.g. Web Programming Inquiry"
+              required
+              minlength="3"
+              maxlength="100"
+            >
+          </div>
+
+          <div class="form-group">
+            <label for="contact-message">Message <span class="req">*</span></label>
+            <textarea
+              id="contact-message"
+              name="message"
+              class="form-control"
+              rows="4"
+              placeholder="Write your message here (at least 10 characters)..."
+              required
+              minlength="10"
+              maxlength="500"
+            ></textarea>
+          </div>
+
+          <button type="submit" class="add-btn form-submit-btn">Send Message</button>
+          <p id="contact-feedback" class="form-feedback" aria-live="polite"></p>
+        </form>
+      </div>
+
+      <!-- Live Demo Link Card dẫn tới week6/registration-form.html -->
+      <a href="week6/registration-form.html" class="card portal-card" data-icon="🎓">
+        <h3>Student Registration Form</h3>
+        <p>Week 6 Live Demo: Gachon University student registration form with <code>&lt;fieldset&gt;</code>, <code>&lt;legend&gt;</code>, and 9-digit Student ID pattern validation.</p>
+        <span class="portal-cta">Open Registration Form →</span>
+      </a>
+    </div>
+  </section>
+
   <!-- TASK MANAGER SECTION (Từ E3) -->
   <section class="section-container" id="tasks" style="padding-top: 0;">
     <div class="task-manager-wrapper">
@@ -68,6 +152,157 @@
       </div>
       <ul id="todo-list" class="task-list"></ul>
       <p id="empty-todo-msg" class="empty-msg">No tasks yet! Add one above.</p>
+    </div>
+  </section>
+
+ <!-- =========================================
+       W6-FRI: JOKE FETCHER (Fetch API + Async/Await)
+       ========================================= -->
+  <section class="section-container" id="jokes">
+    <h2 class="sticky-h2">Random Joke Fetcher</h2>
+
+    <div class="joke-wrapper">
+      <h3>Developer Humor Generator</h3>
+      <p class="joke-subtitle">Powered by Fetch API &amp; Async/Await</p>
+
+      <div class="joke-controls">
+        <button id="load-joke-btn" class="add-btn" onclick="loadJoke()">Load a Joke</button>
+        <button id="save-fav-btn" class="fav-btn" disabled>★ Save Favourite</button>
+      </div>
+
+      <!-- Challenge: Loading Spinner & Status -->
+      <div id="joke-status-row" class="joke-status-row" aria-live="polite">
+        <span id="joke-spinner" class="spinner" hidden></span>
+        <span id="joke-status" class="joke-status-text">Click "Load a Joke" to fetch from the internet.</span>
+      </div>
+
+      <!-- Required: Separate elements for Setup & Punchline -->
+      <div id="joke-card" class="joke-display" hidden>
+        <p id="joke-setup" class="joke-setup"></p>
+        <p id="joke-punchline" class="joke-punchline"></p>
+      </div>
+
+      <!-- Extra Credit: Saved Favourites (localStorage) -->
+      <div class="fav-section">
+        <h4>Saved Favourites</h4>
+        <ul id="fav-joke-list" class="task-list"></ul>
+        <p id="empty-fav-msg" class="empty-msg">No favourite jokes saved yet.</p>
+      </div>
+    </div>
+
+    <!-- Link mở file bài tập độc lập week6/joke-fetcher.html -->
+    <div style="max-width: 650px; margin: 24px auto 0;">
+      <a class="card portal-card task-card" href="week6/joke-fetcher.html" data-icon="😂">
+        <h3>Week 6 Lab: Standalone Joke Fetcher</h3>
+        <p>Open <code>week6/joke-fetcher.html</code> — standalone centered card version with Fetch API, spinner, error handling, and localStorage favourites.</p>
+        <span class="portal-cta">Open week6/joke-fetcher.html →</span>
+      </a>
+    </div>
+  </section>
+
+  <!-- =========================================
+       W6-FRI: JS FORM VALIDATION & ARIA REGISTRATION
+       ========================================= -->
+  <section class="section-container" id="registration">
+    <h2 class="sticky-h2">Student Portal Registration (JS Validation)</h2>
+
+    <div class="w6fri-reg-wrapper">
+      <h3>Create Student Account</h3>
+      <p class="contact-subtitle">Real-time input validation, ARIA alerts, and <code>setCustomValidity()</code> password confirmation.</p>
+
+      <form id="w6fri-reg-form" class="styled-form" novalidate>
+        <fieldset class="reg-fieldset">
+          <legend>Student Info</legend>
+
+          <div class="form-group">
+            <label for="w6fri-sname">Full Name <span class="req">*</span></label>
+            <input
+              type="text"
+              id="w6fri-sname"
+              name="sname"
+              class="form-control w6fri-input"
+              placeholder="e.g. Truong Phat Thuan"
+              required
+              minlength="2"
+              maxlength="50"
+              aria-describedby="w6fri-err-sname"
+            >
+            <span class="w6fri-error" id="w6fri-err-sname" role="alert"></span>
+          </div>
+
+          <div class="form-group">
+            <label for="w6fri-sid">Student ID (9 digits) <span class="req">*</span></label>
+            <input
+              type="text"
+              id="w6fri-sid"
+              name="sid"
+              class="form-control w6fri-input"
+              placeholder="e.g. 202431234"
+              inputmode="numeric"
+              required
+              pattern="\d{9}"
+              aria-describedby="w6fri-err-sid"
+            >
+            <span class="w6fri-error" id="w6fri-err-sid" role="alert"></span>
+          </div>
+
+          <div class="form-group">
+            <label for="w6fri-semail">Gachon Email <span class="req">*</span></label>
+            <input
+              type="email"
+              id="w6fri-semail"
+              name="semail"
+              class="form-control w6fri-input"
+              placeholder="e.g. edward@gachon.ac.kr"
+              required
+              aria-describedby="w6fri-err-semail"
+            >
+            <span class="w6fri-error" id="w6fri-err-semail" role="alert"></span>
+          </div>
+        </fieldset>
+
+        <fieldset class="reg-fieldset">
+          <legend>Security Credentials</legend>
+
+          <div class="form-group">
+            <label for="w6fri-pw">Password (min 8 chars) <span class="req">*</span></label>
+            <input
+              type="password"
+              id="w6fri-pw"
+              name="pw"
+              class="form-control w6fri-input"
+              placeholder="Minimum 8 characters"
+              required
+              minlength="8"
+              aria-describedby="w6fri-err-pw"
+            >
+            <span class="w6fri-error" id="w6fri-err-pw" role="alert"></span>
+          </div>
+
+          <div class="form-group">
+            <label for="w6fri-pw2">Confirm Password <span class="req">*</span></label>
+            <input
+              type="password"
+              id="w6fri-pw2"
+              name="pw2"
+              class="form-control w6fri-input"
+              placeholder="Re-enter password"
+              required
+              aria-describedby="w6fri-err-pw2"
+            >
+            <span class="w6fri-error" id="w6fri-err-pw2" role="alert"></span>
+          </div>
+        </fieldset>
+
+        <button type="submit" id="w6fri-submit-btn" class="add-btn form-submit-btn w6fri-submit" disabled>
+          Register Student
+        </button>
+
+        <div id="w6fri-success-box" class="w6fri-success-box" role="status" aria-live="polite" hidden>
+          <strong>✓ Student Registration Completed!</strong>
+          <span id="w6fri-success-text"></span>
+        </div>
+      </form>
     </div>
   </section>
 
