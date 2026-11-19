@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Week 12 E3: Live Word Count Textarea - Truong Phat Thuan</title>
+  <style>
+    :root {
+      --primary: #15803d;
+      --accent: #10b981;
+      --bg: #f8fafc;
+      --card: #ffffff;
+      --text: #1e293b;
+      --subtext: #475569;
+      --border: #cbd5e1;
+      --hero-bg: linear-gradient(135deg, #ecfdf5 0%, #dcfce7 100%);
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: 'Segoe UI', system-ui, sans-serif; background: var(--bg); color: var(--text); line-height: 1.6; }
+    header { background: #1e293b; color: #fff; padding: 14px 24px; display: flex; justify-content: space-between; align-items: center; }
+    .hero { background: var(--hero-bg); padding: 38px 20px; text-align: center; border-bottom: 1px solid var(--border); }
+    .hero h1 { color: var(--primary); font-size: 1.9rem; margin-bottom: 6px; }
+    main { max-width: 650px; margin: 36px auto; padding: 0 20px; }
+    .box { background: var(--card); border: 1px solid var(--border); border-radius: 12px; padding: 26px; }
+    textarea { width: 100%; min-height: 140px; padding: 12px; border: 2px solid var(--border); border-radius: 8px; font-family: inherit; font-size: 1rem; margin: 12px 0; }
+    textarea:focus { outline: none; border-color: var(--primary); }
+    .stats { display: flex; gap: 16px; font-weight: 700; color: var(--primary); }
+  </style>
+</head>
+<body>
+  <div id="root"></div>
+  <script src="https://unpkg.com/react@18/umd/react.development.js" crossorigin></script>
+  <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js" crossorigin></script>
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+  <script type="text/babel">
+    const { useState } = React;
+
+    function LiveWordCounter() {
+      const [text, setText] = useState("");
+      const wordCount = text.trim() === "" ? 0 : text.trim().split(/\s+/).length;
+
+      return (
+        <div className="box">
+          <label htmlFor="bio-textarea"><strong>Project Description / Bio Draft</strong></label>
+          <textarea
+            id="bio-textarea"
+            value={text}
+            onChange={(e) => setText(e.target.value)}
+            placeholder="Start typing to see real-time word and character counts..."
+          />
+          <div className="stats" aria-live="polite">
+            <span>Words: {wordCount}</span>
+            <span>Characters: {text.length}</span>
+          </div>
+        </div>
+      );
+    }
+
+    function App() {
+      return (
+        <>
+          <header>
+            <strong>EDWARD · Week 12 Practice (E3)</strong>
+            <span>Live Word Count with useState</span>
+          </header>
+          <section className="hero">
+            <h1>Practice: Live Word Count Textarea</h1>
+            <p>Truong Phat Thuan (Edward) — Controlled textarea component powered by React useState.</p>
+          </section>
+          <main><LiveWordCounter /></main>
+        </>
+      );
+    }
+
+    ReactDOM.createRoot(document.getElementById("root")).render(<App />);
+  </script>
+</body>
+</html>

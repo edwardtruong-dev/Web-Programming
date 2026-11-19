@@ -455,3 +455,222 @@ if (saveFavBtn && favJokeList) {
     }
   });
 })();
+
+/* =========================================
+   W11: PORTFOLIO GALLERY & TECH FILTER
+   ========================================= */
+(() => {
+  const w11Grid = document.querySelector('#w11-project-grid');
+  const w11FilterBar = document.querySelector('#w11-filter-bar');
+  if (!w11Grid || !w11FilterBar) return;
+
+  const w11Projects = [
+    {
+      id: 'w11-p1',
+      title: 'Week 7: Web Accessibility (A11y)',
+      description: 'Semantic landmarks, Skip Link, button vs div, alt text rules, and WCAG 2.1 AA contrast audit.',
+      tech: ['HTML/JS', 'CSS'],
+      demo: './Week7/E3_Lighthouse_A11y_Homework.html'
+    },
+    {
+      id: 'w11-p2',
+      title: 'Week 8: Web Performance Optimization',
+      description: 'Core Web Vitals, WebP lazy loading, non-blocking defer script, and CSS minification.',
+      tech: ['HTML/JS', 'CSS'],
+      demo: './Week8/E3_Defer_Performance_Homework.html'
+    },
+    {
+      id: 'w11-p3',
+      title: 'Week 11: React Portfolio Gallery',
+      description: 'Reusable ProjectCard, ProjectList, and FilterBar built with one-way props.',
+      tech: ['React', 'CSS'],
+      demo: './Week11/E2_Portfolio_Gallery.html'
+    },
+    {
+      id: 'w11-p4',
+      title: 'Week 12: React Interactive Shopping Cart',
+      description: 'Immutable array state updates with spread, .map(), .filter(), and KRW total calculation.',
+      tech: ['React', 'HTML/JS'],
+      demo: './Week12/E2_Interactive_Shopping_Cart.html'
+    },
+    {
+      id: 'w11-p5',
+      title: 'Week 9: Git & GitHub Pages Deployment',
+      description: 'Branch/merge workflow, custom 404.html, and static deployment checklist.',
+      tech: ['Node', 'React'],
+      demo: './Week9/E2_Pages_Deployment_Lab.html'
+    }
+  ];
+
+  function renderW11(selected = 'All') {
+    const list = selected === 'All' ? w11Projects : w11Projects.filter((p) => p.tech.includes(selected));
+    w11Grid.innerHTML = '';
+    list.forEach((proj) => {
+      const card = document.createElement('article');
+      card.className = 'card w11-project-card';
+      card.innerHTML = `
+        <div>
+          <h3>${proj.title}</h3>
+          <p>${proj.description}</p>
+          <div class="w11-tags">${proj.tech.map((t) => `<span class="w11-tag">${t}</span>`).join('')}</div>
+        </div>
+        <a href="${proj.demo}" class="portal-cta">Open Project Demo →</a>
+      `;
+      w11Grid.appendChild(card);
+    });
+  }
+
+  w11FilterBar.addEventListener('click', (e) => {
+    const btn = e.target.closest('.w11-filter-btn');
+    if (!btn) return;
+    w11FilterBar.querySelectorAll('.w11-filter-btn').forEach((b) => b.classList.remove('is-active'));
+    btn.classList.add('is-active');
+    renderW11(btn.dataset.tech);
+  });
+
+  renderW11('All');
+})();
+
+/* =========================================
+   W12: COUNTER WITH HISTORY & SHOPPING CART
+   ========================================= */
+(() => {
+  // 1. Counter with History (last 5 + Undo)
+  const countDisplay = document.querySelector('#w12-count-display');
+  const historyText = document.querySelector('#w12-history-text');
+  const incBtn = document.querySelector('#w12-inc-btn');
+  const decBtn = document.querySelector('#w12-dec-btn');
+  const resetBtn = document.querySelector('#w12-reset-btn');
+  const undoBtn = document.querySelector('#w12-undo-btn');
+
+  if (countDisplay && historyText && incBtn && decBtn && resetBtn && undoBtn) {
+    let w12Count = 0;
+    let w12History = [0];
+
+    const syncCounter = () => {
+      countDisplay.textContent = String(w12Count);
+      historyText.textContent = `[${w12History.slice(-5).join(', ')}]`;
+      undoBtn.disabled = w12History.length <= 1;
+    };
+
+    const pushCount = (next) => {
+      w12Count = next;
+      w12History = [...w12History, next];
+      syncCounter();
+    };
+
+    incBtn.addEventListener('click', () => pushCount(w12Count + 1));
+    decBtn.addEventListener('click', () => pushCount(w12Count - 1));
+    resetBtn.addEventListener('click', () => w12Count !== 0 && pushCount(0));
+    undoBtn.addEventListener('click', () => {
+      if (w12History.length <= 1) return;
+      w12Count = w12History[w12History.length - 2];
+      w12History = w12History.slice(0, -1);
+      syncCounter();
+    });
+
+    syncCounter();
+  }
+
+  // 2. Live Word Count Textarea
+  const wordArea = document.querySelector('#w12-word-textarea');
+  const wordStats = document.querySelector('#w12-word-stats');
+  if (wordArea && wordStats) {
+    wordArea.addEventListener('input', () => {
+      const val = wordArea.value;
+      const words = val.trim() === '' ? 0 : val.trim().split(/\s+/).length;
+      wordStats.textContent = `Words: ${words} · Characters: ${val.length}`;
+    });
+  }
+
+  // 3. Interactive Shopping Cart
+  const prodList = document.querySelector('#w12-product-list');
+  const cartList = document.querySelector('#w12-cart-items');
+  const emptyCart = document.querySelector('#w12-empty-cart');
+  const cartCount = document.querySelector('#w12-cart-count');
+  const cartTotal = document.querySelector('#w12-cart-total');
+
+  if (prodList && cartList && emptyCart && cartCount && cartTotal) {
+    const thumb = (label, bg) =>
+      `data:image/svg+xml;utf8,${encodeURIComponent(`<svg xmlns="http://www.w3.org/2000/svg" width="280" height="120"><rect width="280" height="120" fill="${bg}"/><text x="140" y="65" text-anchor="middle" fill="#fff" font-family="sans-serif" font-size="15" font-weight="bold">${label}</text></svg>`)}`;
+
+    const w12Products = [
+      { id: 1, name: 'Wireless Earbuds', price: 89000, img: thumb('Wireless Earbuds', '#15803d') },
+      { id: 2, name: '75% Mech Keyboard', price: 129000, img: thumb('75% Keyboard', '#0f766e') },
+      { id: 3, name: 'USB-C 7-in-1 Hub', price: 45000, img: thumb('USB-C Hub', '#1e293b') },
+      { id: 4, name: 'Laptop Stand', price: 32000, img: thumb('Laptop Stand', '#047857') },
+      { id: 5, name: 'Gachon Hoodie', price: 54000, img: thumb('Gachon Hoodie', '#166534') }
+    ];
+
+    let w12Cart = [{ id: 1, name: 'Wireless Earbuds', price: 89000, qty: 1 }];
+
+    const renderProds = () => {
+      prodList.innerHTML = '';
+      w12Products.forEach((p) => {
+        const el = document.createElement('article');
+        el.className = 'w12-prod-card';
+        el.innerHTML = `
+          <div>
+            <img src="${p.img}" width="280" height="120" alt="${p.name}" loading="lazy" class="w12-prod-img">
+            <h4>${p.name}</h4>
+            <p class="w12-prod-price">${p.price.toLocaleString()}원</p>
+          </div>
+          <button type="button" class="add-btn" data-add="${p.id}">+ Add</button>
+        `;
+        prodList.appendChild(el);
+      });
+    };
+
+    const renderCart = () => {
+      cartList.innerHTML = '';
+      emptyCart.style.display = w12Cart.length === 0 ? 'block' : 'none';
+      w12Cart.forEach((item) => {
+        const li = document.createElement('li');
+        li.className = 'task-item';
+        li.innerHTML = `
+          <div>
+            <strong>${item.name}</strong>
+            <div style="font-size: 0.82rem; color: var(--subtext);">${(item.price * item.qty).toLocaleString()}원</div>
+          </div>
+          <div class="w12-qty-group">
+            <button type="button" class="w12-qty-btn" data-delta="-1" data-id="${item.id}" aria-label="Decrease quantity">-</button>
+            <span><strong>${item.qty}</strong></span>
+            <button type="button" class="w12-qty-btn" data-delta="1" data-id="${item.id}" aria-label="Increase quantity">+</button>
+            <button type="button" class="del-btn" data-rem="${item.id}">✕</button>
+          </div>
+        `;
+        cartList.appendChild(li);
+      });
+      cartCount.textContent = String(w12Cart.reduce((s, i) => s + i.qty, 0));
+      cartTotal.textContent = `${w12Cart.reduce((s, i) => s + i.price * i.qty, 0).toLocaleString()}원`;
+    };
+
+    prodList.addEventListener('click', (e) => {
+      const id = Number(e.target.dataset.add);
+      if (!id) return;
+      const p = w12Products.find((x) => x.id === id);
+      w12Cart = w12Cart.some((i) => i.id === id)
+        ? w12Cart.map((i) => (i.id === id ? { ...i, qty: i.qty + 1 } : i))
+        : [...w12Cart, { id: p.id, name: p.name, price: p.price, qty: 1 }];
+      renderCart();
+    });
+
+    cartList.addEventListener('click', (e) => {
+      const rem = Number(e.target.dataset.rem);
+      if (rem) {
+        w12Cart = w12Cart.filter((i) => i.id !== rem);
+        renderCart();
+        return;
+      }
+      const id = Number(e.target.dataset.id);
+      const delta = Number(e.target.dataset.delta);
+      if (id && delta) {
+        w12Cart = w12Cart.map((i) => (i.id === id ? { ...i, qty: i.qty + delta } : i)).filter((i) => i.qty > 0);
+        renderCart();
+      }
+    });
+
+    renderProds();
+    renderCart();
+  }
+})();

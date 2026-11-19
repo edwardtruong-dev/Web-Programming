@@ -4,28 +4,39 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width,initial-scale=1.0">
   <title>TRUONG PHAT THUAN (Edward) - Portfolio</title>
-  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="./style.css">
+  <script src="./script.js" defer></script>
 </head>
 <body>
 
+  <!-- W7-E3/HW: SKIP NAVIGATION LINK (WCAG 2.1 LEVEL A) -->
+  <a href="#main-content" class="skip-link">Skip to main content</a>
+
   <!-- NAVIGATION -->
-  <nav>
-    <div class="nav-brand">
-      <div class="logo">EDWARD</div>
-      <!-- Theme Toggle (Từ E2) -->
-      <button class="theme-toggle" id="theme-btn">
-        <span id="theme-icon">🌙</span> <span id="theme-text">Dark Mode</span>
-      </button>
-    </div>
-    <div class="nav-links">
-      <a href="#about">About</a>
-      <a href="#skills">Skills</a>
-      <a href="#contact">Contact</a>
-      <a href="#registration">Registration</a>
-      <a href="#tasks">Task Manager</a>
-      <a href="#jokes">Joke Fetcher</a>
-    </div>
-  </nav>
+  <header>
+    <nav aria-label="Main navigation">
+      <div class="nav-brand">
+        <div class="logo">EDWARD</div>
+        <!-- Theme Toggle (Từ E2) -->
+        <button type="button" class="theme-toggle" id="theme-btn" aria-label="Toggle color theme">
+          <span id="theme-icon" aria-hidden="true">🌙</span> <span id="theme-text">Dark Mode</span>
+        </button>
+      </div>
+      <div class="nav-links">
+        <a href="#about">About</a>
+        <a href="#skills">Skills</a>
+        <a href="#contact">Contact</a>
+        <a href="#registration">Registration</a>
+        <a href="#tasks">Task Manager</a>
+        <a href="#jokes">Joke Fetcher</a>
+        <a href="#gallery">Projects</a>
+        <a href="#react-lab">React Lab</a>
+        <a href="#audits">Weeks 7–9 Labs</a>
+      </div>
+    </nav>
+  </header>
+
+  <main id="main-content" tabindex="-1">
 
   <!-- HERO SECTION -->
   <section class="hero" id="about">
@@ -306,7 +317,193 @@
     </div>
   </section>
 
-  <!-- JAVASCRIPT LOGIC -->
-  <script src="script.js"></script>
+  <!-- =========================================
+       W11: PORTFOLIO GALLERY & TECH FILTER (PROPS)
+       ========================================= -->
+  <section class="section-container" id="gallery">
+    <h2 class="sticky-h2">Portfolio Gallery (Week 11 React Props)</h2>
+
+    <!-- FilterBar theo công nghệ (Week 11 Homework) -->
+    <div class="w11-filter-bar" id="w11-filter-bar" role="group" aria-label="Filter projects by technology">
+      <button type="button" class="w11-filter-btn is-active" data-tech="All">All</button>
+      <button type="button" class="w11-filter-btn" data-tech="React">React</button>
+      <button type="button" class="w11-filter-btn" data-tech="Node">Node</button>
+      <button type="button" class="w11-filter-btn" data-tech="CSS">CSS</button>
+      <button type="button" class="w11-filter-btn" data-tech="HTML/JS">HTML/JS</button>
+    </div>
+
+    <!-- ProjectList render động qua JS -->
+    <div class="grid" id="w11-project-grid"></div>
+
+    <!-- Liên kết mở trực tiếp 2 file bài tập lẻ Tuần 11 -->
+    <div class="w11-demo-links">
+      <a class="card portal-card" href="./Week11/E1_ProductCard.html" data-icon="🏷️">
+        <h3>Week 11 E1: React ProductCard</h3>
+        <p>Code Challenge: Reusable <code>ProductCard</code> component with KRW price, star rating, and Out of Stock badge.</p>
+        <span class="portal-cta">Open Week11/E1_ProductCard.html →</span>
+      </a>
+      <a class="card portal-card" href="./Week11/E2_Portfolio_Gallery.html" data-icon="⚛️">
+        <h3>Week 11 E2: React Portfolio Gallery</h3>
+        <p>Homework: Full React app composing <code>FilterBar</code>, <code>ProjectList</code>, and <code>ProjectCard</code>.</p>
+        <span class="portal-cta">Open Week11/E2_Portfolio_Gallery.html →</span>
+      </a>
+    </div>
+  </section>
+
+  <!-- =========================================
+       W12: INTERACTIVE STATE LAB (COUNTER + CART)
+       ========================================= -->
+  <section class="section-container" id="react-lab">
+    <h2 class="sticky-h2">Interactive State Lab (Week 12 useState)</h2>
+
+    <div class="w12-lab-grid">
+      <!-- Code Challenge: Counter with History (last 5 + Undo) -->
+      <div class="w12-box">
+        <h3>Counter with History &amp; Undo</h3>
+        <p class="contact-subtitle">Tracks last 5 state values and supports immutable Undo.</p>
+        <div class="w12-count-val" id="w12-count-display" aria-live="polite">0</div>
+        <div class="w12-btn-row">
+          <button type="button" class="add-btn" id="w12-inc-btn">+1</button>
+          <button type="button" class="add-btn" id="w12-dec-btn">-1</button>
+          <button type="button" class="fav-btn" id="w12-reset-btn">Reset</button>
+          <button type="button" class="fav-btn" id="w12-undo-btn" disabled>Undo</button>
+        </div>
+        <div class="w12-history-bar">History (last 5): <strong id="w12-history-text">[0]</strong></div>
+      </div>
+
+      <!-- Practice: Live Word Count Textarea -->
+      <div class="w12-box">
+        <h3>Live Word Count Note</h3>
+        <p class="contact-subtitle">Real-time word and character counter.</p>
+        <textarea id="w12-word-textarea" class="form-control" rows="4" placeholder="Type notes here to count words live..."></textarea>
+        <p class="w12-word-stats" id="w12-word-stats" aria-live="polite">Words: 0 · Characters: 0</p>
+      </div>
+    </div>
+
+    <!-- Homework: Interactive Shopping Cart -->
+    <div class="w12-cart-layout">
+      <div class="w12-products" id="w12-product-list"></div>
+      <aside class="w12-cart-panel" aria-label="Shopping cart sidebar">
+        <h3>Cart Sidebar (<span id="w12-cart-count">0</span>)</h3>
+        <ul id="w12-cart-items" class="task-list"></ul>
+        <p id="w12-empty-cart" class="empty-msg">Your cart is empty.</p>
+        <div class="w12-cart-total">
+          <span>Total Price:</span>
+          <strong id="w12-cart-total">0원</strong>
+        </div>
+      </aside>
+    </div>
+
+    <!-- Liên kết mở trực tiếp 3 file bài tập lẻ Tuần 12 -->
+    <div class="grid" style="margin-top: 22px;">
+      <a class="card portal-card" href="./Week12/E1_CounterWithHistory.html" data-icon="⏪">
+        <h3>Week 12 E1: Counter + History</h3>
+        <p>Standalone React <code>useState</code> counter with 5-step history and Undo.</p>
+        <span class="portal-cta">Open Week12/E1_CounterWithHistory.html →</span>
+      </a>
+      <a class="card portal-card" href="./Week12/E2_Interactive_Shopping_Cart.html" data-icon="🛒">
+        <h3>Week 12 E2: Shopping Cart</h3>
+        <p>Standalone React <code>ShoppingCart</code> with immutable spread, map, and filter.</p>
+        <span class="portal-cta">Open Week12/E2_Interactive_Shopping_Cart.html →</span>
+      </a>
+      <a class="card portal-card" href="./Week12/E3_Live_Word_Counter.html" data-icon="✍️">
+        <h3>Week 12 E3: Live Word Counter</h3>
+        <p>Standalone React controlled <code>&lt;textarea&gt;</code> word counter.</p>
+        <span class="portal-cta">Open Week12/E3_Live_Word_Counter.html →</span>
+      </a>
+    </div>
+  </section>
+
+  <!-- =========================================
+       W7-9: ACCESSIBILITY, PERFORMANCE & DEPLOYMENT
+       ========================================= -->
+  <section class="section-container" id="audits">
+    <h2 class="sticky-h2">Weeks 7–9: Accessibility, Performance &amp; Deployment</h2>
+
+    <div class="w79-audit-grid">
+      <article class="w79-card">
+        <h3>Lighthouse Accessibility (Week 7) &amp; Performance (Week 8)</h3>
+        <p>Implemented top-of-body <code>.skip-link</code>, WCAG 2.1 AA contrast (&ge; 4.5:1), semantic <code>&lt;header&gt;</code>/<code>&lt;main&gt;</code>/<code>&lt;footer&gt;</code>, <code>&lt;script defer&gt;</code>, and explicit image dimensions.</p>
+        <img
+          src="data:image/svg+xml;utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='440' height='145' viewBox='0 0 440 145'%3E%3Crect width='440' height='145' fill='%23051a0a' rx='8'/%3E%3Ctext x='220' y='62' text-anchor='middle' fill='%2334d399' font-family='sans-serif' font-size='24' font-weight='bold'%3EA11y: 82 → 100 | Perf: 78 → 98%3C/text%3E%3Ctext x='220' y='100' text-anchor='middle' fill='%23ecfdf5' font-family='sans-serif' font-size='13'%3EWCAG 2.1 Level AA · defer JS · Lazy Loading · GitHub Pages%3C/text%3E%3C/svg%3E"
+          width="440"
+          height="145"
+          alt="Lighthouse audit comparison showing Accessibility improved from 82 to 100 and Performance improved from 78 to 98"
+          loading="lazy"
+          class="w79-audit-img"
+        >
+      </article>
+
+      <article class="w79-card">
+        <h3>Week 8 Performance Summary (2 Sentences)</h3>
+        <p>To eliminate render-blocking execution and layout shifts, I moved <code>script.js</code> into <code>&lt;head&gt;</code> with the <code>defer</code> attribute and added explicit <code>width</code> and <code>height</code> attributes to all images. Additionally, I applied <code>loading="lazy"</code> to below-the-fold project thumbnails and converted graphics to lightweight vector/WebP formats, boosting the Lighthouse Performance score from 78 to 98.</p>
+      </article>
+    </div>
+
+    <!-- Danh sách đầy đủ các bài lẻ Tuần 7 (E1, E2, E3/HW) -->
+    <h3 class="w79-subhead">Week 7: Web Accessibility (A11y)</h3>
+    <div class="grid">
+      <a class="card portal-card" href="./Week7/E1_Fix_Div_To_Button.html" data-icon="🔘">
+        <h3>Week 7 E1: Fix div to button</h3>
+        <p>Replacing mouse-only <code>&lt;div onclick&gt;</code> with keyboard-accessible native <code>&lt;button&gt;</code> and ARIA roles.</p>
+        <span class="portal-cta">Open Week7/E1_Fix_Div_To_Button.html →</span>
+      </a>
+      <a class="card portal-card" href="./Week7/E2_Add_Alt_Text.html" data-icon="🖼️">
+        <h3>Week 7 E2: Add alt Text</h3>
+        <p>WCAG 1.1.1 patterns for informative charts, decorative graphics (<code>alt=""</code>), and icon buttons.</p>
+        <span class="portal-cta">Open Week7/E2_Add_Alt_Text.html →</span>
+      </a>
+      <a class="card portal-card" href="./Week7/E3_Lighthouse_A11y_Homework.html" data-icon="♿">
+        <h3>Week 7 E3 &amp; HW: Lighthouse A11y</h3>
+        <p>Skip link implementation, Before/After Lighthouse screenshots (100/100), and 4 fixed audits.</p>
+        <span class="portal-cta">Open Week7/E3_Lighthouse_A11y_Homework.html →</span>
+      </a>
+    </div>
+
+    <!-- Danh sách đầy đủ các bài lẻ Tuần 8 (E1, E2, E3/HW) -->
+    <h3 class="w79-subhead">Week 8: Web Performance Optimization</h3>
+    <div class="grid">
+      <a class="card portal-card" href="./Week8/E1_Run_Lighthouse.html" data-icon="📊">
+        <h3>Week 8 E1: Run Lighthouse</h3>
+        <p>Core Web Vitals thresholds (FCP, LCP, CLS, TBT) and live Navigation Timing API inspector.</p>
+        <span class="portal-cta">Open Week8/E1_Run_Lighthouse.html →</span>
+      </a>
+      <a class="card portal-card" href="./Week8/E2_Image_WebP_Lazy.html" data-icon="⚡">
+        <h3>Week 8 E2: Image → WebP &amp; Lazy</h3>
+        <p><code>&lt;picture&gt;</code> WebP fallback, explicit dimensions (CLS = 0), and <code>loading="lazy"</code>.</p>
+        <span class="portal-cta">Open Week8/E2_Image_WebP_Lazy.html →</span>
+      </a>
+      <a class="card portal-card" href="./Week8/E3_Defer_Performance_Homework.html" data-icon="🚀">
+        <h3>Week 8 E3 &amp; HW: Defer &amp; Report</h3>
+        <p>Non-blocking <code>&lt;script defer&gt;</code>, live CSS minifier, and Before/After Performance report.</p>
+        <span class="portal-cta">Open Week8/E3_Defer_Performance_Homework.html →</span>
+      </a>
+    </div>
+
+    <!-- Danh sách đầy đủ các bài lẻ Tuần 9 (Git Mon, Pages Fri, Custom 404) -->
+    <h3 class="w79-subhead">Week 9: Git Version Control &amp; GitHub Pages Deployment</h3>
+    <div class="grid">
+      <a class="card portal-card" href="./Week9/E1_Git_Workflow_Lab.html" data-icon="🌿">
+        <h3>Week 9 Mon: Git Workflow Lab</h3>
+        <p><code>git init</code>, <code>branch</code>/<code>merge</code>, remote push, and 5+ meaningful commits log.</p>
+        <span class="portal-cta">Open Week9/E1_Git_Workflow_Lab.html →</span>
+      </a>
+      <a class="card portal-card" href="./Week9/E2_Pages_Deployment_Lab.html" data-icon="🌐">
+        <h3>Week 9 Fri: GitHub Pages Lab</h3>
+        <p>Live URL validator and 6-point Cybercampus pre-submission checklist.</p>
+        <span class="portal-cta">Open Week9/E2_Pages_Deployment_Lab.html →</span>
+      </a>
+      <a class="card portal-card" href="./404.html" data-icon="🧭">
+        <h3>Week 9 E3: Custom 404 Page</h3>
+        <p>Root-level <code>404.html</code> fallback page served automatically by GitHub Pages.</p>
+        <span class="portal-cta">Open 404.html →</span>
+      </a>
+    </div>
+  </section>
+  </main>
+
+  <footer class="site-footer">
+    <p>&copy; 2026 TRUONG PHAT THUAN (Edward) · Computer Engineering, Gachon University · Deployed on GitHub Pages</p>
+  </footer>
 </body>
 </html>

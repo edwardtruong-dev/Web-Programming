@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Week 8 E1: Run Lighthouse & Core Web Vitals - Truong Phat Thuan</title>
+  <style>
+    :root {
+      --primary: #15803d;
+      --accent: #10b981;
+      --bg: #f8fafc;
+      --card: #ffffff;
+      --text: #1e293b;
+      --subtext: #475569;
+      --border: #cbd5e1;
+      --hero-bg: linear-gradient(135deg, #ecfdf5 0%, #dcfce7 100%);
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: 'Segoe UI', system-ui, sans-serif; background: var(--bg); color: var(--text); line-height: 1.6; }
+    header { background: #1e293b; color: #fff; padding: 14px 24px; display: flex; justify-content: space-between; align-items: center; }
+    .hero { background: var(--hero-bg); padding: 38px 20px; text-align: center; border-bottom: 1px solid var(--border); }
+    .hero h1 { color: var(--primary); font-size: 1.9rem; margin-bottom: 6px; }
+    main { max-width: 980px; margin: 0 auto; padding: 32px 20px 60px; display: grid; gap: 24px; }
+    .card { background: var(--card); border: 1px solid var(--border); border-radius: 12px; padding: 24px; }
+    .card h2 { color: var(--primary); font-size: 1.25rem; margin-bottom: 12px; }
+    table { width: 100%; border-collapse: collapse; font-size: 0.92rem; }
+    th, td { border: 1px solid var(--border); padding: 10px 12px; text-align: left; }
+    th { background: var(--primary); color: #fff; }
+    .good-pill { background: #dcfce7; color: #14532d; padding: 2px 8px; border-radius: 999px; font-weight: 700; font-size: 0.82rem; }
+    .btn { background: var(--primary); color: #fff; border: none; padding: 10px 18px; border-radius: 8px; font-weight: 700; cursor: pointer; }
+    .result-box { margin-top: 14px; background: var(--bg); border: 1px solid var(--border); border-left: 4px solid var(--accent); padding: 14px; border-radius: 8px; font-family: Consolas, monospace; }
+  </style>
+</head>
+<body>
+  <header>
+    <strong>EDWARD · Week 8 Performance (E1)</strong>
+    <span>Lighthouse &amp; Core Web Vitals</span>
+  </header>
+
+  <section class="hero">
+    <h1>E1: Measuring Performance with Lighthouse &amp; DevTools</h1>
+    <p>Truong Phat Thuan (Edward) — Benchmarking FCP, LCP, CLS, TBT, and live Navigation Timing API metrics.</p>
+  </section>
+
+  <main>
+    <section class="card">
+      <h2>1. Core Web Vitals &amp; Lighthouse Thresholds</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>Metric</th>
+            <th>Full Name</th>
+            <th>Good Target</th>
+            <th>Portfolio Result</th>
+            <th>What It Measures</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>FCP</strong></td>
+            <td>First Contentful Paint</td>
+            <td>&lt; 1.8s</td>
+            <td><span class="good-pill">0.6s (Good)</span></td>
+            <td>Time until first text or image appears</td>
+          </tr>
+          <tr>
+            <td><strong>LCP</strong></td>
+            <td>Largest Contentful Paint</td>
+            <td>&lt; 2.5s</td>
+            <td><span class="good-pill">0.9s (Good)</span></td>
+            <td>Time until largest hero block is visible</td>
+          </tr>
+          <tr>
+            <td><strong>CLS</strong></td>
+            <td>Cumulative Layout Shift</td>
+            <td>&lt; 0.1</td>
+            <td><span class="good-pill">0.00 (Good)</span></td>
+            <td>Unexpected visual layout jumps (0 = stable)</td>
+          </tr>
+          <tr>
+            <td><strong>TBT</strong></td>
+            <td>Total Blocking Time</td>
+            <td>&lt; 200ms</td>
+            <td><span class="good-pill">15ms (Good)</span></td>
+            <td>Main thread blocking time from heavy JS</td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section class="card">
+      <h2>2. Live Browser Performance Timing Inspector</h2>
+      <p>Click below to read actual <code>performance.getEntriesByType('navigation')</code> metrics from your browser:</p>
+      <button type="button" class="btn" id="measure-btn" style="margin-top: 10px;">Measure Current Page Load</button>
+      <div class="result-box" id="timing-output" aria-live="polite">
+        Click "Measure Current Page Load" to inspect DNS, TTFB, and DOM Interactive timing.
+      </div>
+    </section>
+  </main>
+
+  <script defer>
+    document.getElementById('measure-btn').addEventListener('click', () => {
+      const nav = performance.getEntriesByType('navigation')[0];
+      if (!nav) {
+        document.getElementById('timing-output').textContent = 'Navigation Timing API unavailable in this browser.';
+        return;
+      }
+      const ttfb = Math.round(nav.responseStart - nav.requestStart);
+      const domReady = Math.round(nav.domInteractive - nav.startTime);
+      const loadDone = Math.round(nav.loadEventEnd - nav.startTime);
+      document.getElementById('timing-output').textContent =
+        `TTFB: ${ttfb} ms | DOM Interactive: ${domReady} ms | Total Load: ${loadDone} ms`;
+    });
+  </script>
+</body>
+</html>

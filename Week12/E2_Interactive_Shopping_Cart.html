@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Week 12 E2: React Interactive Shopping Cart - Truong Phat Thuan</title>
+  <style>
+    :root {
+      --primary: #15803d;
+      --accent: #10b981;
+      --bg: #f8fafc;
+      --card: #ffffff;
+      --text: #1e293b;
+      --subtext: #475569;
+      --border: #cbd5e1;
+      --hero-bg: linear-gradient(135deg, #ecfdf5 0%, #dcfce7 100%);
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: 'Segoe UI', system-ui, sans-serif; background: var(--bg); color: var(--text); line-height: 1.6; }
+    header { background: #1e293b; color: #fff; padding: 14px 24px; display: flex; justify-content: space-between; align-items: center; }
+    .hero { background: var(--hero-bg); padding: 38px 20px; text-align: center; border-bottom: 1px solid var(--border); }
+    .hero h1 { color: var(--primary); font-size: 1.9rem; margin-bottom: 6px; }
+    main { max-width: 1080px; margin: 0 auto; padding: 32px 20px 60px; }
+    .layout { display: grid; grid-template-columns: 2fr 1.15fr; gap: 22px; align-items: start; }
+    @media (max-width: 800px) { .layout { grid-template-columns: 1fr; } }
+    .p-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 16px; }
+    .p-card { background: var(--card); border: 1px solid var(--border); border-radius: 12px; padding: 16px; display: flex; flex-direction: column; justify-content: space-between; }
+    .p-card img { width: 100%; height: 105px; object-fit: cover; border-radius: 8px; margin-bottom: 10px; }
+    .p-card h2 { font-size: 1rem; color: var(--primary); margin-bottom: 4px; }
+    .p-price { font-weight: 800; margin-bottom: 10px; }
+    .btn { padding: 8px 14px; border: none; border-radius: 8px; background: var(--primary); color: #fff; font-weight: 700; cursor: pointer; }
+    .sidebar { background: var(--card); border: 1px solid var(--border); border-radius: 12px; padding: 22px; }
+    .sidebar h2 { color: var(--primary); font-size: 1.25rem; margin-bottom: 12px; border-bottom: 2px solid var(--accent); padding-bottom: 6px; }
+    .row { display: flex; justify-content: space-between; align-items: center; gap: 8px; padding: 10px 0; border-bottom: 1px solid var(--border); }
+    .qty-box { display: flex; align-items: center; gap: 6px; }
+    .q-btn { width: 26px; height: 26px; border: 1px solid var(--border); border-radius: 6px; background: var(--bg); font-weight: 800; cursor: pointer; }
+    .del-btn { background: #dc2626; color: #fff; border: none; border-radius: 6px; padding: 4px 8px; font-weight: 700; cursor: pointer; }
+    .total { margin-top: 14px; display: flex; justify-content: space-between; font-size: 1.15rem; font-weight: 800; color: var(--primary); }
+  </style>
+</head>
+<body>
+  <div id="root"></div>
+  <script src="https://unpkg.com/react@18/umd/react.development.js" crossorigin></script>
+  <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js" crossorigin></script>
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+  <script type="text/babel">
+    const { useState } = React;
+
+    const svgUrl = (title, bg) =>
+      `data:image/svg+xml;utf8,${encodeURIComponent(`<svg xmlns="http://www.w3.org/2000/svg" width="300" height="150"><rect width="300" height="150" fill="${bg}"/><text x="150" y="82" text-anchor="middle" fill="#fff" font-family="sans-serif" font-size="16" font-weight="bold">${title}</text></svg>`)}`;
+
+    const CATALOG = [
+      { id: 1, name: "Wireless Earbuds", price: 89000, image: svgUrl("Wireless Earbuds", "#15803d") },
+      { id: 2, name: "75% Mech Keyboard", price: 129000, image: svgUrl("Mech Keyboard", "#0f766e") },
+      { id: 3, name: "USB-C Multi Hub", price: 45000, image: svgUrl("USB-C Hub", "#1e293b") },
+      { id: 4, name: "Laptop Stand", price: 32000, image: svgUrl("Laptop Stand", "#047857") },
+      { id: 5, name: "Gachon Hoodie", price: 54000, image: svgUrl("Gachon Hoodie", "#166534") }
+    ];
+
+    function ShoppingCart() {
+      const [cart, setCart] = useState([{ id: 1, name: "Wireless Earbuds", price: 89000, qty: 1 }]);
+
+      const addItem = (prod) => {
+        setCart((prev) =>
+          prev.some((i) => i.id === prod.id)
+            ? prev.map((i) => (i.id === prod.id ? { ...i, qty: i.qty + 1 } : i))
+            : [...prev, { id: prod.id, name: prod.name, price: prod.price, qty: 1 }]
+        );
+      };
+
+      const changeQty = (id, delta) => {
+        setCart((prev) =>
+          prev.map((i) => (i.id === id ? { ...i, qty: i.qty + delta } : i)).filter((i) => i.qty > 0)
+        );
+      };
+
+      const removeItem = (id) => setCart((prev) => prev.filter((i) => i.id !== id));
+
+      const total = cart.reduce((sum, i) => sum + i.price * i.qty, 0);
+
+      return (
+        <div className="layout">
+          <section className="p-grid" aria-label="Product list">
+            {CATALOG.map((p) => (
+              <article key={p.id} className="p-card">
+                <div>
+                  <img src={p.image} width="300" height="150" alt={p.name} loading="lazy" />
+                  <h2>{p.name}</h2>
+                  <p className="p-price">{p.price.toLocaleString()}원</p>
+                </div>
+                <button type="button" className="btn" onClick={() => addItem(p)}>+ Add</button>
+              </article>
+            ))}
+          </section>
+
+          <aside className="sidebar" aria-label="Cart sidebar">
+            <h2>Cart Sidebar ({cart.reduce((s, i) => s + i.qty, 0)})</h2>
+            {cart.length === 0 ? (
+              <p style={{ color: "var(--subtext)" }}>Cart is empty.</p>
+            ) : (
+              cart.map((item) => (
+                <div key={item.id} className="row">
+                  <div>
+                    <strong>{item.name}</strong>
+                    <div style={{ fontSize: "0.84rem", color: "var(--subtext)" }}>{(item.price * item.qty).toLocaleString()}원</div>
+                  </div>
+                  <div className="qty-box">
+                    <button type="button" className="q-btn" onClick={() => changeQty(item.id, -1)} aria-label="Decrease">-</button>
+                    <span><strong>{item.qty}</strong></span>
+                    <button type="button" className="q-btn" onClick={() => changeQty(item.id, 1)} aria-label="Increase">+</button>
+                    <button type="button" className="del-btn" onClick={() => removeItem(item.id)}>✕</button>
+                  </div>
+                </div>
+              ))
+            )}
+            <div className="total">
+              <span>Total:</span>
+              <span>{total.toLocaleString()}원</span>
+            </div>
+          </aside>
+        </div>
+      );
+    }
+
+    function App() {
+      return (
+        <>
+          <header>
+            <strong>EDWARD · Week 12 Homework (E2)</strong>
+            <span>ShoppingCart Component</span>
+          </header>
+          <section className="hero">
+            <h1>Interactive Shopping Cart (React useState)</h1>
+            <p>Truong Phat Thuan (Edward) — Immutable array updates with spread, .map(), .filter(), and live total.</p>
+          </section>
+          <main><ShoppingCart /></main>
+        </>
+      );
+    }
+
+    ReactDOM.createRoot(document.getElementById("root")).render(<App />);
+  </script>
+</body>
+</html>

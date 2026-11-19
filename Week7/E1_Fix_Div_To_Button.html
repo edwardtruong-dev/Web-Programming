@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Week 7 E1: Fix div to button - Truong Phat Thuan</title>
+  <style>
+    :root {
+      --primary: #15803d;
+      --accent: #10b981;
+      --bg: #f8fafc;
+      --card: #ffffff;
+      --text: #1e293b;
+      --subtext: #475569;
+      --border: #cbd5e1;
+      --hero-bg: linear-gradient(135deg, #ecfdf5 0%, #dcfce7 100%);
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: 'Segoe UI', system-ui, sans-serif; background: var(--bg); color: var(--text); line-height: 1.6; }
+    header { background: #1e293b; color: #fff; padding: 14px 24px; display: flex; justify-content: space-between; align-items: center; }
+    .hero { background: var(--hero-bg); padding: 38px 20px; text-align: center; border-bottom: 1px solid var(--border); }
+    .hero h1 { color: var(--primary); font-size: 1.9rem; margin-bottom: 6px; }
+    main { max-width: 960px; margin: 0 auto; padding: 32px 20px 60px; display: grid; gap: 24px; }
+    .grid-2 { display: grid; grid-template-columns: repeat(auto-fit, minmax(290px, 1fr)); gap: 20px; }
+    .card { background: var(--card); border: 1px solid var(--border); border-radius: 12px; padding: 24px; }
+    .card h2 { color: var(--primary); font-size: 1.2rem; margin-bottom: 10px; }
+    .bad-box { border-top: 4px solid #dc2626; }
+    .good-box { border-top: 4px solid #16a34a; }
+    .fake-btn {
+      display: inline-block;
+      background: #94a3b8;
+      color: #0f172a;
+      padding: 10px 18px;
+      border-radius: 8px;
+      font-weight: 700;
+      cursor: pointer;
+      margin: 12px 0;
+    }
+    .real-btn {
+      background: var(--primary);
+      color: #ffffff;
+      border: none;
+      padding: 10px 18px;
+      border-radius: 8px;
+      font-weight: 700;
+      font-size: 0.95rem;
+      cursor: pointer;
+      margin: 12px 0;
+    }
+    .real-btn:focus-visible, .custom-role-btn:focus-visible { outline: 3px solid var(--accent); outline-offset: 3px; }
+    .custom-role-btn {
+      display: inline-block;
+      background: #0f766e;
+      color: #ffffff;
+      padding: 10px 18px;
+      border-radius: 8px;
+      font-weight: 700;
+      cursor: pointer;
+      margin: 12px 0;
+    }
+    .log-bar {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-left: 4px solid var(--accent);
+      padding: 14px 18px;
+      border-radius: 8px;
+      font-weight: 600;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <strong>EDWARD · Week 7 A11y (E1)</strong>
+    <span>Semantic &lt;button&gt; vs &lt;div onclick&gt;</span>
+  </header>
+
+  <section class="hero">
+    <h1>E1: Fix &lt;div&gt; to Native &lt;button&gt;</h1>
+    <p>Truong Phat Thuan (Edward) — Unplug your mouse and press <strong>Tab</strong>, <strong>Enter</strong>, and <strong>Space</strong> to compare accessibility.</p>
+  </section>
+
+  <main>
+    <div class="log-bar" id="action-log" role="status" aria-live="polite">
+      Keyboard Test Status: Press Tab to navigate across the controls below.
+    </div>
+
+    <div class="grid-2">
+      <!-- Before: Inaccessible div -->
+      <article class="card bad-box">
+        <h2>❌ Before: &lt;div onclick&gt; (Broken)</h2>
+        <p>Cannot be focused with <code>Tab</code>, ignores <code>Enter</code>/<code>Space</code>, and screen readers announce it as plain text instead of a button.</p>
+        <div class="fake-btn" onclick="logEvent('Mouse-only <div> clicked (unreachable by keyboard!)')">
+          Submit Enrollment
+        </div>
+      </article>
+
+      <!-- After: Native button -->
+      <article class="card good-box">
+        <h2>✅ After: Native &lt;button type="button"&gt;</h2>
+        <p>Automatically focusable via <code>Tab</code>, triggered by both <code>Enter</code> and <code>Space</code>, and announced with implicit <code>role="button"</code>.</p>
+        <button type="button" class="real-btn" onclick="logEvent('Native <button> activated via Mouse, Enter, or Space!')">
+          Submit Enrollment
+        </button>
+      </article>
+    </div>
+
+    <!-- Custom ARIA fallback when non-semantic element is required -->
+    <article class="card">
+      <h2>Bonus: Accessible Custom Control (role + tabindex + keydown)</h2>
+      <p>When a custom card wrapper must act as a button, pair <code>role="button"</code>, <code>tabindex="0"</code>, and <code>Enter</code>/<code>Space</code> key handlers:</p>
+      <div
+        role="button"
+        tabindex="0"
+        class="custom-role-btn"
+        aria-label="Open Gachon Student Card"
+        onclick="logEvent('Custom ARIA role=button activated!')"
+        onkeydown="handleCustomKey(event)"
+      >
+        Open Student Card (Custom ARIA Button)
+      </div>
+    </article>
+  </main>
+
+  <script>
+    function logEvent(msg) {
+      document.getElementById('action-log').textContent = 'Triggered: ' + msg;
+    }
+    function handleCustomKey(e) {
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        logEvent('Custom ARIA role=button activated via ' + (e.key === ' ' ? 'Space' : 'Enter') + ' key!');
+      }
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Week 11 E1: React ProductCard Component - Truong Phat Thuan</title>
+  <style>
+    :root {
+      --primary: #15803d;
+      --accent: #10b981;
+      --bg: #f8fafc;
+      --card: #ffffff;
+      --text: #1e293b;
+      --subtext: #475569;
+      --border: #cbd5e1;
+      --hero-bg: linear-gradient(135deg, #ecfdf5 0%, #dcfce7 100%);
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: 'Segoe UI', system-ui, sans-serif; background: var(--bg); color: var(--text); line-height: 1.6; }
+    header { background: #1e293b; color: #fff; padding: 14px 24px; display: flex; justify-content: space-between; align-items: center; }
+    .hero { background: var(--hero-bg); padding: 38px 20px; text-align: center; border-bottom: 1px solid var(--border); }
+    .hero h1 { color: var(--primary); font-size: 1.9rem; margin-bottom: 6px; }
+    main { max-width: 980px; margin: 0 auto; padding: 32px 20px 60px; }
+    .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 20px; }
+    .p-card { background: var(--card); border: 1px solid var(--border); border-radius: 12px; padding: 22px; display: flex; flex-direction: column; justify-content: space-between; }
+    .p-card h2 { color: var(--primary); font-size: 1.2rem; margin-bottom: 6px; }
+    .p-price { font-size: 1.35rem; font-weight: 800; margin-bottom: 8px; }
+    .p-rating { color: #b45309; font-weight: 700; margin-bottom: 12px; }
+    .badge { display: inline-block; padding: 4px 12px; border-radius: 999px; font-size: 0.8rem; font-weight: 700; margin-bottom: 16px; }
+    .in-stock { background: #dcfce7; color: #14532d; }
+    .out-stock { background: #fee2e2; color: #991b1b; }
+    .btn { width: 100%; padding: 10px; border: none; border-radius: 8px; background: var(--primary); color: #fff; font-weight: 700; cursor: pointer; }
+    .btn:disabled { opacity: 0.45; cursor: not-allowed; }
+  </style>
+</head>
+<body>
+  <div id="root"></div>
+  <script src="https://unpkg.com/react@18/umd/react.development.js" crossorigin></script>
+  <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js" crossorigin></script>
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+  <script type="text/babel">
+    function ProductCard({ name = "Product", price = 0, rating = 0, inStock = false }) {
+      const full = Math.floor(rating);
+      const half = rating - full >= 0.5;
+      const stars = "★".repeat(full) + (half ? "½" : "") + "☆".repeat(Math.max(0, 5 - full - (half ? 1 : 0)));
+
+      return (
+        <article className="p-card">
+          <div>
+            <h2>{name}</h2>
+            <p className="p-price">{price.toLocaleString()}원</p>
+            <p className="p-rating">{stars} ({rating} / 5 stars)</p>
+            <span className={`badge ${inStock ? "in-stock" : "out-stock"}`}>
+              {inStock ? "In Stock" : "Out of Stock"}
+            </span>
+          </div>
+          <button type="button" className="btn" disabled={!inStock}>
+            {inStock ? "Add to Order" : "Out of Stock"}
+          </button>
+        </article>
+      );
+    }
+
+    function App() {
+      return (
+        <>
+          <header>
+            <strong>EDWARD · Week 11 React Props (E1)</strong>
+            <span>ProductCard Component</span>
+          </header>
+          <section className="hero">
+            <h1>Code Challenge: Reusable ProductCard</h1>
+            <p>Truong Phat Thuan (Edward) — Props destructuring, KRW formatting, star rating, and conditional stock badge.</p>
+          </section>
+          <main>
+            <div className="grid">
+              <ProductCard name="Wireless Earbuds" price={89000} rating={4.5} inStock={true} />
+              <ProductCard name="75% Mechanical Keyboard" price={129000} rating={5.0} inStock={true} />
+              <ProductCard name="USB-C Multi-Port Hub" price={45000} rating={4.0} inStock={false} />
+            </div>
+          </main>
+        </>
+      );
+    }
+
+    ReactDOM.createRoot(document.getElementById("root")).render(<App />);
+  </script>
+</body>
+</html>

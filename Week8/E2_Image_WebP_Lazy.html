@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Week 8 E2: Image WebP & Lazy Loading - Truong Phat Thuan</title>
+  <style>
+    :root {
+      --primary: #15803d;
+      --accent: #10b981;
+      --bg: #f8fafc;
+      --card: #ffffff;
+      --text: #1e293b;
+      --subtext: #475569;
+      --border: #cbd5e1;
+      --hero-bg: linear-gradient(135deg, #ecfdf5 0%, #dcfce7 100%);
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: 'Segoe UI', system-ui, sans-serif; background: var(--bg); color: var(--text); line-height: 1.6; }
+    header { background: #1e293b; color: #fff; padding: 14px 24px; display: flex; justify-content: space-between; align-items: center; }
+    .hero { background: var(--hero-bg); padding: 38px 20px; text-align: center; border-bottom: 1px solid var(--border); }
+    .hero h1 { color: var(--primary); font-size: 1.9rem; margin-bottom: 6px; }
+    main { max-width: 980px; margin: 0 auto; padding: 32px 20px 60px; display: grid; gap: 24px; }
+    .card { background: var(--card); border: 1px solid var(--border); border-radius: 12px; padding: 24px; }
+    .card h2 { color: var(--primary); font-size: 1.25rem; margin-bottom: 10px; }
+    .media-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 18px; margin-top: 12px; }
+    figure { background: var(--bg); border: 1px solid var(--border); border-radius: 10px; padding: 12px; }
+    figure img { width: 100%; height: auto; border-radius: 6px; display: block; }
+    figcaption { margin-top: 8px; font-size: 0.86rem; color: var(--subtext); }
+    pre {
+      background: #0f172a;
+      color: #e2e8f0;
+      padding: 14px;
+      border-radius: 8px;
+      overflow-x: auto;
+      font-size: 0.85rem;
+      margin-top: 10px;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <strong>EDWARD · Week 8 Performance (E2)</strong>
+    <span>WebP Format, CLS Dimensions &amp; Lazy Loading</span>
+  </header>
+
+  <section class="hero">
+    <h1>E2: Image Optimization (WebP, srcset &amp; loading="lazy")</h1>
+    <p>Truong Phat Thuan (Edward) — Serving next-gen formats with explicit width/height to guarantee CLS = 0.</p>
+  </section>
+
+  <main>
+    <section class="card">
+      <h2>1. Above-the-Fold (Eager) vs. Below-the-Fold (Lazy)</h2>
+      <div class="media-grid">
+        <figure>
+          <picture>
+            <source srcset="data:image/svg+xml;utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='600' height='300' viewBox='0 0 600 300'%3E%3Crect width='600' height='300' fill='%2315803d'/%3E%3Ctext x='300' y='155' text-anchor='middle' fill='%23ffffff' font-family='sans-serif' font-size='22' font-weight='bold'%3EAbove-the-Fold Hero (loading=&quot;eager&quot;)%3C/text%3E%3C/svg%3E" type="image/svg+xml">
+            <img
+              src="data:image/svg+xml;utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='600' height='300' viewBox='0 0 600 300'%3E%3Crect width='600' height='300' fill='%2315803d'/%3E%3Ctext x='300' y='155' text-anchor='middle' fill='%23ffffff' font-family='sans-serif' font-size='22' font-weight='bold'%3EAbove-the-Fold Hero (loading=&quot;eager&quot;)%3C/text%3E%3C/svg%3E"
+              width="600"
+              height="300"
+              loading="eager"
+              fetchpriority="high"
+              alt="Above-the-fold hero banner loaded eagerly with high fetch priority"
+            >
+          </picture>
+          <figcaption><strong>Hero Image:</strong> Uses <code>loading="eager"</code> + <code>fetchpriority="high"</code> + explicit <code>width="600" height="300"</code>.</figcaption>
+        </figure>
+
+        <figure>
+          <img
+            src="data:image/svg+xml;utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='600' height='300' viewBox='0 0 600 300'%3E%3Crect width='600' height='300' fill='%230f766e'/%3E%3Ctext x='300' y='155' text-anchor='middle' fill='%23ffffff' font-family='sans-serif' font-size='22' font-weight='bold'%3EBelow-the-Fold Card (loading=&quot;lazy&quot;)%3C/text%3E%3C/svg%3E"
+            width="600"
+            height="300"
+            loading="lazy"
+            alt="Below-the-fold project card deferred with native lazy loading"
+          >
+          <figcaption><strong>Below-the-Fold Image:</strong> Uses <code>loading="lazy"</code> so the browser defers downloading until near the viewport.</figcaption>
+        </figure>
+      </div>
+    </section>
+
+    <section class="card">
+      <h2>2. Production HTML Pattern (&lt;picture&gt; + WebP Fallback)</h2>
+      <pre>&lt;picture&gt;
+  &lt;source srcset="portfolio-hero.webp" type="image/webp"&gt;
+  &lt;img src="portfolio-hero.jpg" alt="Truong Phat Thuan Portfolio"
+       width="1200" height="600" fetchpriority="high"&gt;
+&lt;/picture&gt;
+
+&lt;!-- Off-screen project thumbnails --&gt;
+&lt;img src="project-thumb.webp" alt="Gachon Task Manager"
+     width="400" height="300" loading="lazy"&gt;</pre>
+    </section>
+  </main>
+</body>
+</html>

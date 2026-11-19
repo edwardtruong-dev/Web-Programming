@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Week 9 Mon: Git & Version Control Lab - Truong Phat Thuan</title>
+  <style>
+    :root {
+      --primary: #15803d;
+      --accent: #10b981;
+      --bg: #f8fafc;
+      --card: #ffffff;
+      --text: #1e293b;
+      --subtext: #475569;
+      --border: #cbd5e1;
+      --hero-bg: linear-gradient(135deg, #ecfdf5 0%, #dcfce7 100%);
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: 'Segoe UI', system-ui, sans-serif; background: var(--bg); color: var(--text); line-height: 1.6; }
+    header { background: #1e293b; color: #fff; padding: 14px 24px; display: flex; justify-content: space-between; align-items: center; }
+    .hero { background: var(--hero-bg); padding: 38px 20px; text-align: center; border-bottom: 1px solid var(--border); }
+    .hero h1 { color: var(--primary); font-size: 1.9rem; margin-bottom: 6px; }
+    main { max-width: 960px; margin: 0 auto; padding: 32px 20px 60px; display: grid; gap: 22px; }
+    .card { background: var(--card); border: 1px solid var(--border); border-radius: 12px; padding: 24px; }
+    .card h2 { color: var(--primary); font-size: 1.25rem; margin-bottom: 10px; border-bottom: 2px solid var(--accent); padding-bottom: 6px; }
+    pre {
+      background: #0f172a;
+      color: #e2e8f0;
+      padding: 14px 16px;
+      border-radius: 8px;
+      overflow-x: auto;
+      font-size: 0.86rem;
+      line-height: 1.55;
+    }
+    .commit-list { list-style: none; display: grid; gap: 8px; margin-top: 10px; }
+    .commit-list li {
+      background: var(--bg);
+      border: 1px solid var(--border);
+      padding: 10px 14px;
+      border-radius: 8px;
+      font-family: Consolas, monospace;
+      font-size: 0.88rem;
+    }
+    .hash { color: var(--primary); font-weight: 700; margin-right: 8px; }
+  </style>
+</head>
+<body>
+  <header>
+    <strong>EDWARD · Week 9 Mon (Git Lab)</strong>
+    <span>E1 First Repo · E2 Branch &amp; Merge · E3 Push · HW</span>
+  </header>
+
+  <section class="hero">
+    <h1>Git &amp; Version Control Lab (E1 – E3 &amp; Homework)</h1>
+    <p>Truong Phat Thuan (Edward) — Local repository workflow, feature branching, GitHub remote push, and 5+ meaningful commits.</p>
+  </section>
+
+  <main>
+    <section class="card">
+      <h2>E1: First Repository (init, status, add, commit)</h2>
+      <pre>mkdir portfolio &amp;&amp; cd portfolio
+git init
+git status
+git add index.html style.css script.js
+git commit -m "Initial commit: add portfolio structure and Emerald theme"</pre>
+    </section>
+
+    <section class="card">
+      <h2>E2: Branch &amp; Merge (feature/search)</h2>
+      <pre>git checkout -b feature/search
+# Edit index.html and script.js to add live directory search
+git diff
+git add index.html script.js
+git commit -m "feat(search): add live technical domain search with highlight"
+git checkout main
+git merge feature/search</pre>
+    </section>
+
+    <section class="card">
+      <h2>E3: Push to GitHub Remote</h2>
+      <pre>git branch -M main
+git remote add origin https://github.com/EdwardTruong/portfolio.git
+git push -u origin main
+git log --oneline</pre>
+    </section>
+
+    <section class="card">
+      <h2>HW: Portfolio Repository (5+ Meaningful Commits Verified)</h2>
+      <p>Repository includes <code>index.html</code> (name, avatar, bio, skills, and links to course projects) with 6 clean commits:</p>
+      <ul class="commit-list">
+        <li><span class="hash">f9a21c4</span>feat(weeks7-12): integrate accessibility, performance, deployment &amp; React labs</li>
+        <li><span class="hash">d84e10b</span>feat(week6): add Fetch API joke generator and ARIA form validation</li>
+        <li><span class="hash">c31b77a</span>feat(week5): add interactive personal task manager with delete controls</li>
+        <li><span class="hash">9a04e21</span>feat(search): implement live technical domain search filter</li>
+        <li><span class="hash">5e72d19</span>style(theme): add Emerald dark mode toggle and responsive 3-column grid</li>
+        <li><span class="hash">1a09f3c</span>init: create portfolio index.html with hero, bio, and navigation</li>
+      </ul>
+    </section>
+  </main>
+</body>
+</html>

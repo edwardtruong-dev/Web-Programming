@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Week 7 E2: Add Meaningful alt Text - Truong Phat Thuan</title>
+  <style>
+    :root {
+      --primary: #15803d;
+      --accent: #10b981;
+      --bg: #f8fafc;
+      --card: #ffffff;
+      --text: #1e293b;
+      --subtext: #475569;
+      --border: #cbd5e1;
+      --hero-bg: linear-gradient(135deg, #ecfdf5 0%, #dcfce7 100%);
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: 'Segoe UI', system-ui, sans-serif; background: var(--bg); color: var(--text); line-height: 1.6; }
+    header { background: #1e293b; color: #fff; padding: 14px 24px; display: flex; justify-content: space-between; align-items: center; }
+    .hero { background: var(--hero-bg); padding: 38px 20px; text-align: center; border-bottom: 1px solid var(--border); }
+    .hero h1 { color: var(--primary); font-size: 1.9rem; margin-bottom: 6px; }
+    main { max-width: 980px; margin: 0 auto; padding: 32px 20px 60px; display: grid; gap: 22px; }
+    .grid-3 { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; }
+    .card { background: var(--card); border: 1px solid var(--border); border-radius: 12px; padding: 22px; }
+    .card h2 { color: var(--primary); font-size: 1.15rem; margin-bottom: 8px; }
+    .card img { width: 100%; height: auto; border-radius: 8px; margin: 12px 0; border: 1px solid var(--border); }
+    .sr-preview {
+      background: var(--bg);
+      border-left: 4px solid var(--accent);
+      padding: 10px 12px;
+      border-radius: 6px;
+      font-size: 0.88rem;
+      margin-top: 10px;
+    }
+    .icon-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--primary);
+      color: #fff;
+      border: none;
+      padding: 10px 16px;
+      border-radius: 8px;
+      font-weight: 700;
+      cursor: pointer;
+      margin: 12px 0;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <strong>EDWARD · Week 7 A11y (E2)</strong>
+    <span>WCAG 1.1.1 Non-Text Content</span>
+  </header>
+
+  <section class="hero">
+    <h1>E2: Writing Effective &lt;img alt="..."&gt; Attributes</h1>
+    <p>Truong Phat Thuan (Edward) — Distinguishing informative, decorative, and functional images for screen readers.</p>
+  </section>
+
+  <main>
+    <div class="grid-3">
+      <!-- 1. Informative Image -->
+      <article class="card">
+        <h2>1. Informative Image</h2>
+        <p>Describe both the content and the data insight without saying <em>"image of..."</em>.</p>
+        <img
+          src="data:image/svg+xml;utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='360' height='180' viewBox='0 0 360 180'%3E%3Crect width='360' height='180' fill='%23ecfdf5'/%3E%3Crect x='50' y='100' width='45' height='55' fill='%2394a3b8'/%3E%3Crect x='130' y='70' width='45' height='85' fill='%2310b981'/%3E%3Crect x='210' y='35' width='45' height='120' fill='%2315803d'/%3E%3Ctext x='180' y='22' text-anchor='middle' fill='%231e293b' font-family='sans-serif' font-size='13' font-weight='bold'%3EGachon CS Enrollment (2024-2026)%3C/text%3E%3C/svg%3E"
+          width="360"
+          height="180"
+          alt="Bar chart showing Gachon Computer Science enrollment rising 40 percent from 2024 to 2026"
+        >
+        <div class="sr-preview">
+          <strong>Screen Reader:</strong> "Bar chart showing Gachon Computer Science enrollment rising 40 percent from 2024 to 2026, graphic"
+        </div>
+      </article>
+
+      <!-- 2. Decorative Image -->
+      <article class="card">
+        <h2>2. Decorative Divider (alt="")</h2>
+        <p>Use an empty string <code>alt=""</code> so screen readers skip visual flourishes completely instead of reading raw filenames.</p>
+        <img
+          src="data:image/svg+xml;utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='360' height='60' viewBox='0 0 360 60'%3E%3Cpath d='M0 30 Q 90 5, 180 30 T 360 30' fill='none' stroke='%2310b981' stroke-width='5'/%3E%3C/svg%3E"
+          width="360"
+          height="60"
+          alt=""
+        >
+        <div class="sr-preview">
+          <strong>Screen Reader:</strong> <em>(Skipped completely — zero noise!)</em>
+        </div>
+      </article>
+
+      <!-- 3. Functional Icon Button -->
+      <article class="card">
+        <h2>3. Functional Icon Button</h2>
+        <p>Describe the <strong>action</strong> (<code>alt="Search"</code>), not the icon's appearance (not <em>"magnifying glass"</em>).</p>
+        <button type="button" class="icon-btn" onclick="alert('Search triggered!')">
+          <img
+            src="data:image/svg+xml;utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 24 24' fill='none' stroke='%23ffffff' stroke-width='2.5'%3E%3Ccircle cx='11' cy='11' r='7'/%3E%3Cline x1='16.5' y1='16.5' x2='21' y2='21'/%3E%3C/svg%3E"
+            width="20"
+            height="20"
+            alt="Search"
+            style="width:20px;height:20px;margin:0;border:none;"
+          >
+          <span>Run Directory Search</span>
+        </button>
+        <div class="sr-preview">
+          <strong>Screen Reader:</strong> "Search Run Directory Search, button"
+        </div>
+      </article>
+    </div>
+  </main>
+</body>
+</html>

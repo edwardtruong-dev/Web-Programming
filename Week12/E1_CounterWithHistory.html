@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Week 12 E1: React Counter with History - Truong Phat Thuan</title>
+  <style>
+    :root {
+      --primary: #15803d;
+      --accent: #10b981;
+      --bg: #f8fafc;
+      --card: #ffffff;
+      --text: #1e293b;
+      --subtext: #475569;
+      --border: #cbd5e1;
+      --hero-bg: linear-gradient(135deg, #ecfdf5 0%, #dcfce7 100%);
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: 'Segoe UI', system-ui, sans-serif; background: var(--bg); color: var(--text); line-height: 1.6; }
+    header { background: #1e293b; color: #fff; padding: 14px 24px; display: flex; justify-content: space-between; align-items: center; }
+    .hero { background: var(--hero-bg); padding: 38px 20px; text-align: center; border-bottom: 1px solid var(--border); }
+    .hero h1 { color: var(--primary); font-size: 1.9rem; margin-bottom: 6px; }
+    main { max-width: 540px; margin: 36px auto; padding: 0 20px; }
+    .box { background: var(--card); border: 1px solid var(--border); border-radius: 12px; padding: 32px 24px; text-align: center; }
+    .num { font-size: 4rem; font-weight: 800; color: var(--primary); margin-bottom: 20px; }
+    .btns { display: flex; justify-content: center; gap: 10px; flex-wrap: wrap; margin-bottom: 22px; }
+    .btn { padding: 10px 18px; border: none; border-radius: 8px; font-weight: 700; font-size: 1rem; cursor: pointer; }
+    .btn:disabled { opacity: 0.4; cursor: not-allowed; }
+    .b-green { background: var(--primary); color: #fff; }
+    .b-dark { background: #1e293b; color: #fff; }
+    .b-amber { background: #d97706; color: #fff; }
+    .hist { background: var(--bg); border: 1px solid var(--border); border-radius: 8px; padding: 12px; font-family: Consolas, monospace; }
+  </style>
+</head>
+<body>
+  <div id="root"></div>
+  <script src="https://unpkg.com/react@18/umd/react.development.js" crossorigin></script>
+  <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js" crossorigin></script>
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+  <script type="text/babel">
+    const { useState } = React;
+
+    function CounterWithHistory() {
+      const [count, setCount] = useState(0);
+      const [history, setHistory] = useState([0]);
+
+      const pushNext = (next) => {
+        setCount(next);
+        setHistory((prev) => [...prev, next]);
+      };
+
+      const handleUndo = () => {
+        if (history.length <= 1) return;
+        setCount(history[history.length - 2]);
+        setHistory((prev) => prev.slice(0, -1));
+      };
+
+      return (
+        <div className="box">
+          <div className="num" aria-live="polite">{count}</div>
+          <div className="btns">
+            <button type="button" className="btn b-green" onClick={() => pushNext(count + 1)}>+1</button>
+            <button type="button" className="btn b-green" onClick={() => pushNext(count - 1)}>-1</button>
+            <button type="button" className="btn b-dark" onClick={() => count !== 0 && pushNext(0)}>Reset</button>
+            <button type="button" className="btn b-amber" onClick={handleUndo} disabled={history.length <= 1}>Undo</button>
+          </div>
+          <div className="hist">
+            History (last 5): <strong style={{ color: "var(--primary)" }}>[{history.slice(-5).join(", ")}]</strong>
+          </div>
+        </div>
+      );
+    }
+
+    function App() {
+      return (
+        <>
+          <header>
+            <strong>EDWARD · Week 12 useState (E1)</strong>
+            <span>CounterWithHistory</span>
+          </header>
+          <section className="hero">
+            <h1>Code Challenge: Counter with History</h1>
+            <p>Truong Phat Thuan (Edward) — Two useState hooks, last 5 history values, and immutable Undo.</p>
+          </section>
+          <main><CounterWithHistory /></main>
+        </>
+      );
+    }
+
+    ReactDOM.createRoot(document.getElementById("root")).render(<App />);
+  </script>
+</body>
+</html>
